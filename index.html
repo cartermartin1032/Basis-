@@ -17,8 +17,9 @@ button{font-size:18px;padding:14px;border-radius:12px;border:0;min-height:52px;f
 .basis{font-size:40px;font-weight:800;text-align:center;padding:10px;border-radius:12px;background:#f0ede2;margin-top:12px}
 .neg{color:#b03a2e}.pos{color:#2e7d32}
 nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:#fff;border-top:1px solid #ddd;padding-bottom:env(safe-area-inset-bottom)}
-nav button{flex:1;background:none;border-radius:0;font-size:14px;padding:10px 4px;min-height:64px}nav button.on{color:var(--g);border-top:3px solid var(--g)}
+nav button{flex:1;background:none;border-radius:0;font-size:12px;padding:8px 2px;min-height:64px;line-height:1.2}nav button.on{color:var(--g);border-top:3px solid var(--g)}
 table{width:100%;border-collapse:collapse;font-size:15px}td,th{padding:7px 4px;text-align:right;border-bottom:1px solid #eee}td:first-child,th:first-child{text-align:left}
+h3{margin:14px 0 6px;font-size:16px}.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .ent{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #eee;gap:8px}.ent small{color:var(--m)}
 .ent button{min-height:44px;padding:8px 12px;font-size:15px}.hide{display:none}.muted{color:var(--m);font-size:14px}
 .tag{display:inline-block;padding:2px 8px;border-radius:8px;color:#fff;font-size:13px}
@@ -26,7 +27,11 @@ svg text{font-size:11px;fill:#555}
 </style></head><body>
 <header>🌽 Martin Farms Basis</header>
 <main>
-<section id="v-add">
+<section id="v-posted">
+<div class="card" id="posted-meta"></div>
+<div id="posted"></div>
+</section>
+<section id="v-add" class="hide">
 <div class="card"><h2 id="formTitle">Add Bid</h2>
 <label>Date</label><input type="date" id="f-date">
 <label>Crop</label><div class="tog"><button id="b-corn" class="corn on" onclick="setCrop('Corn')">🌽 Corn</button><button id="b-soy" class="soy" onclick="setCrop('Soybeans')">🫘 Soybeans</button></div>
@@ -44,13 +49,13 @@ svg text{font-size:11px;fill:#555}
 <section id="v-chart" class="hide">
 <div class="card"><h2>🌽 Corn basis</h2><div id="ch-Corn"></div></div>
 <div class="card"><h2>🫘 Soybean basis</h2><div id="ch-Soybeans"></div></div></section>
-<section id="v-list" class="hide"><div class="card"><h2>All bids</h2><div id="list"></div></div>
+<section id="v-list" class="hide"><div class="card"><h2>Your bids</h2><div class="muted" style="margin:-4px 0 8px">Entered on this phone. Posted elevator bids stay on the Posted tab.</div><div id="list"></div></div>
 <div class="card"><h2>Backup</h2><button style="width:100%" onclick="exportCSV()">⬇️ Export CSV</button>
 <label>Import CSV</label><input type="file" accept=".csv,text/csv" id="imp" onchange="importCSV(this)"></div></section>
 <section id="v-locs" class="hide"><div class="card"><h2>Locations</h2><div id="locs"></div>
 <label>Add location</label><input id="newLoc" placeholder="Elevator name"><button class="pri" onclick="addLoc()">Add location</button></div></section>
 </main>
-<nav><button class="on" data-v="add">➕<br>Add</button><button data-v="dash">📊<br>Basis</button><button data-v="chart">📈<br>Chart</button><button data-v="list">📋<br>Bids</button><button data-v="locs">📍<br>Places</button></nav>
+<nav><button class="on" data-v="posted">📌<br>Posted</button><button data-v="add">➕<br>Add</button><button data-v="dash">📊<br>Basis</button><button data-v="chart">📈<br>Chart</button><button data-v="list">📋<br>Bids</button><button data-v="locs">📍<br>Places</button></nav>
 <script>
 const K='basisTracker.v1',COL=['#2f5d34','#d4a017','#1f6fb2','#b03a2e','#7b4fa0','#e07b00','#555'];
 let S=JSON.parse(localStorage.getItem(K)||'null')||{locs:['ADM Havana','Cargill Havana','CHS Havana'],entries:[]};
@@ -62,6 +67,34 @@ function setCrop(c){crop=c;$('b-corn').classList.toggle('on',c=='Corn');$('b-soy
 function fmList(){const y=new Date().getFullYear()%100,ms=crop=='Corn'?['Dec','Mar','May','Jul','Sep']:['Nov','Jan','Mar','May','Jul','Aug','Sep'];let o=[];for(const yy of[y,y+1])for(const m of ms)o.push(m+' '+yy);$('fms').innerHTML=o.map(x=>`<option value="${x}">`).join('')}
 function locOpts(){$('f-loc').innerHTML=S.locs.map(l=>`<option>${esc(l)}</option>`).join('')}
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+const PK=K+'.postedJson',HK=K+'.postedCsv';
+let posted={fetched_at:null,bids:[]},postedHist=[],postedStatus='loading';
+function px(n){const x=Math.round(Number(n)*10000)/10000;if(!isFinite(x))return '—';return x.toFixed(4).replace(/0+$/,'').replace(/\.$/,'')}
+function shortDel(p){const m=String(p||'').match(/\(([^)]+)\)\s*$/);return m?m[1]:(p||'')}
+function futLabel(b){const m=String(b.futures_month||'').replace(/\s*\([^)]*\)\s*$/,'').trim();return (m||b.futures_month||'Futures')+' '+px(b.futures)}
+function locOrder(names){const known=S.locs.filter(l=>names.includes(l));const rest=names.filter(l=>!known.includes(l));return known.concat(rest)}
+function normalizeLatest(j){const bids=Array.isArray(j)?j:(j&&Array.isArray(j.bids)?j.bids:[]);const fetched_at=(j&&!Array.isArray(j)&&j.fetched_at)||null;
+return {fetched_at,bids:bids.map(b=>({date:b.date,commodity:b.commodity,location:b.location,delivery_period:b.delivery_period||b.delivery||'',cash:+b.cash,futures_month:b.futures_month||'',futures:+b.futures,basis:b.basis==null||b.basis===''?r4(+b.cash-+b.futures):+b.basis})).filter(b=>b.commodity&&b.location&&isFinite(b.cash)&&isFinite(b.futures))}}
+function readCachedLatest(){try{const j=JSON.parse(localStorage.getItem(PK)||'null');if(j)return normalizeLatest(j)}catch(e){}return {fetched_at:null,bids:[]}}
+function updatedLabel(){const raw=posted.fetched_at||(posted.bids[0]&&posted.bids[0].date)||'';if(!raw)return '';const d=new Date(raw);if(isNaN(d.getTime()))return String(raw);return d.toLocaleString(undefined,{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'})}
+async function loadOne(url){const ctrl=typeof AbortController=='function'?new AbortController():null;const timer=ctrl?setTimeout(()=>ctrl.abort(),12000):null;try{const r=await fetch(url+(url.includes('?')?'&':'?')+'v='+Date.now(),{cache:'no-store',signal:ctrl?ctrl.signal:undefined});if(!r.ok)throw new Error('HTTP '+r.status);return await r.text()}finally{if(timer)clearTimeout(timer)}}
+function remember(key,value){try{localStorage.setItem(key,value)}catch(e){}}
+async function loadPosted(){let jText=null,csv=null;try{jText=await loadOne('./data/bids_latest.json')}catch(e){}try{csv=await loadOne('./data/bids_history.csv')}catch(e){}
+if(jText!=null){try{posted=normalizeLatest(JSON.parse(jText));remember(PK,JSON.stringify(posted))}catch(e){posted=readCachedLatest();jText=null}}else posted=readCachedLatest();
+if(csv!=null){try{postedHist=parseHistory(csv);remember(HK,csv)}catch(e){csv=null;const cached=localStorage.getItem(HK);postedHist=cached?parseHistory(cached):[]}}else{const cached=localStorage.getItem(HK);postedHist=cached?parseHistory(cached):[]}
+const liveJ=jText!=null,liveC=csv!=null;if(liveJ||liveC)postedStatus=(liveJ&&liveC)?'ok':'partial';else if((posted.bids&&posted.bids.length)||postedHist.length)postedStatus='cached';else postedStatus='offline';render()}
+function postedView(){const meta=$('posted-meta'),el=$('posted');
+if(postedStatus=='loading'){meta.innerHTML='<div class="muted">Loading posted bids…</div>';el.innerHTML='';return}
+if(postedStatus=='offline'&&!(posted.bids&&posted.bids.length)){meta.innerHTML='<div class="muted">Posted bids are not available offline. Bids you enter on this phone are still saved.</div>';el.innerHTML='';return}
+const when=updatedLabel();let note=postedStatus=='cached'?' · saved on this phone (offline)':postedStatus=='partial'?' · some data could not be refreshed':'';
+meta.innerHTML='<div class="muted">Updated '+esc(when||'—')+esc(note)+'</div>';
+const bids=posted.bids||[];if(!bids.length){el.innerHTML='<div class="card"><div class="muted">No posted bids right now.</div></div>';return}
+let h='';for(const c of ['Corn','Soybeans']){const rows=bids.filter(b=>b.commodity==c);if(!rows.length)continue;
+h+=`<div class="card"><h2>${c=='Corn'?'🌽':'🫘'} ${c}</h2>`;
+for(const l of locOrder([...new Set(rows.map(b=>b.location))])){const items=rows.filter(b=>b.location==l).slice().sort((a,b)=>String(a.delivery_period)<String(b.delivery_period)?-1:1);
+h+=`<h3>${esc(l)}</h3><div class="scroll"><table><tr><th>Delivery</th><th>Cash</th><th>Futures</th><th>Basis</th></tr>`;
+for(const b of items)h+=`<tr><td>${esc(shortDel(b.delivery_period))}</td><td>${px(b.cash)}</td><td>${esc(futLabel(b))}</td><td class="${cls(+b.basis)}"><b>${fmt(+b.basis)}</b></td></tr>`;
+h+='</table></div>'}h+='</div>'}el.innerHTML=h}
 function live(){const c=parseFloat($('f-cash').value),f=parseFloat($('f-fut').value);const e=$('live');if(isNaN(c)||isNaN(f)){e.textContent='—';e.className='basis';return}const b=r4(c-f);e.textContent=fmt(b);e.className='basis '+cls(b)}
 ['f-cash','f-fut'].forEach(i=>$(i).addEventListener('input',live));
 function resetForm(){editId=null;$('f-date').value=today();['f-cash','f-fut','f-note'].forEach(i=>$(i).value='');$('formTitle').textContent='Add Bid';$('saveBtn').textContent='Save Bid';$('cancelBtn').classList.add('hide');live()}
@@ -72,20 +105,30 @@ function toast(m){const t=$('live');t.textContent='✓ '+m;t.className='basis po
 function edit(id){const e=S.entries.find(x=>x.id==id);editId=id;$('f-date').value=e.date;setCrop(e.crop);if(!S.locs.includes(e.loc)){S.locs.push(e.loc);locOpts()}$('f-loc').value=e.loc;$('f-del').value=e.del;$('f-cash').value=e.cash;$('f-fm').value=e.fm;$('f-fut').value=e.fut;$('f-note').value=e.note||'';$('formTitle').textContent='Edit Bid';$('saveBtn').textContent='Update Bid';$('cancelBtn').classList.remove('hide');live();show('add')}
 function del(id){if(confirm('Delete this bid?')){S.entries=S.entries.filter(x=>x.id!=id);persist();render()}}
 const B=e=>r4(e.cash-e.fut);const sorted=()=>[...S.entries].sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:a.id<b.id?-1:1);
-function dash(){let h='';for(const c of['Corn','Soybeans']){const es=sorted().filter(e=>e.crop==c);h+=`<div class="card"><h2>${c=='Corn'?'🌽':'🫘'} ${c}</h2>`;if(!es.length){h+='<div class="muted">No bids yet.</div></div>';continue}
-h+='<table><tr><th>Location</th><th>Latest</th><th>Avg</th><th>High</th><th>Low</th></tr>';const locs=[...new Set(es.map(e=>e.loc))];
-for(const l of locs){const le=es.filter(e=>e.loc==l),bs=le.map(B),last=le[le.length-1],lb=B(last),av=bs.reduce((a,b)=>a+b,0)/bs.length;
-h+=`<tr><td>${esc(l)}<br><small class="muted">${last.date.slice(5)} ${esc(last.fm)}</small></td><td class="${cls(lb)}"><b>${fmt(lb)}</b></td><td>${fmt(av)}</td><td>${fmt(Math.max(...bs))}</td><td>${fmt(Math.min(...bs))}</td></tr>`}
-h+='</table></div>'}$('dash').innerHTML=h}
-function chart(c){const es=sorted().filter(e=>e.crop==c),el=$('ch-'+c);if(!es.length){el.innerHTML='<div class="muted">No bids yet.</div>';return}
-const W=340,H=220,L=40,R=10,T=10,Bm=30,ts=es.map(e=>Date.parse(e.date)),bs=es.map(B);let t0=Math.min(...ts),t1=Math.max(...ts);if(t0==t1){t0-=864e5;t1+=864e5}
-let lo=Math.min(...bs,0),hi=Math.max(...bs,0);if(hi-lo<0.1){hi+=0.05;lo-=0.05}const pad=(hi-lo)*0.1;lo-=pad;hi+=pad;
+function dash(){let h='';for(const c of['Corn','Soybeans']){const manual=sorted().filter(e=>e.crop==c);const postedRows=postedHist.filter(e=>e.commodity==c);
+h+=`<div class="card"><h2>${c=='Corn'?'🌽':'🫘'} ${c}</h2>`;if(!manual.length&&!postedRows.length){h+='<div class="muted">No bids yet.</div></div>';continue}
+h+='<div class="scroll"><table><tr><th>Location</th><th>Latest</th><th>Avg</th><th>High</th><th>Low</th></tr>';
+for(const l of locOrder([...new Set(postedRows.map(e=>e.location))])){const dels=[...new Set(postedRows.filter(e=>e.location==l).map(e=>e.delivery_period))].sort();
+for(const d of dels){const bs=postedRows.filter(e=>e.location==l&&e.delivery_period==d).slice().sort((a,b)=>a.date<b.date?-1:1).map(e=>+e.basis);const av=bs.reduce((a,b)=>a+b,0)/bs.length,last=bs[bs.length-1];
+h+=`<tr><td>${esc(l)}<br><small class="muted">posted · ${esc(shortDel(d))}</small></td><td class="${cls(last)}"><b>${fmt(last)}</b></td><td>${fmt(av)}</td><td>${fmt(Math.max(...bs))}</td><td>${fmt(Math.min(...bs))}</td></tr>`}}
+for(const l of locOrder([...new Set(manual.map(e=>e.loc))])){const le=manual.filter(e=>e.loc==l),bs=le.map(B),last=le[le.length-1],lb=B(last),av=bs.reduce((a,b)=>a+b,0)/bs.length;
+h+=`<tr><td>${esc(l)}<br><small class="muted">saved · ${last.date.slice(5)} ${esc(last.fm)}</small></td><td class="${cls(lb)}"><b>${fmt(lb)}</b></td><td>${fmt(av)}</td><td>${fmt(Math.max(...bs))}</td><td>${fmt(Math.min(...bs))}</td></tr>`}
+h+='</table></div></div>'}$('dash').innerHTML=h}
+function chart(c){const el=$('ch-'+c),series=[];const es=sorted().filter(e=>e.crop==c);
+for(const l of locOrder([...new Set(es.map(e=>e.loc))])){const col=COL[Math.max(S.locs.indexOf(l),0)%COL.length]||'#555';
+series.push({name:l,color:col,dashed:false,pts:es.filter(e=>e.loc==l).map(e=>({t:Date.parse(e.date),b:B(e)}))})}
+const ph=postedHist.filter(e=>e.commodity==c),keys=[];ph.forEach(e=>{const k=e.location+'\0'+e.delivery_period;if(!keys.includes(k))keys.push(k)});keys.sort();
+keys.forEach((k,i)=>{const loc=k.split('\0')[0],del=k.slice(loc.length+1);series.push({name:loc+' · '+shortDel(del)+' (posted)',color:COL[i%COL.length],dashed:true,pts:ph.filter(e=>e.location==loc&&e.delivery_period==del).map(e=>({t:Date.parse(e.date),b:+e.basis}))})});
+if(!series.length){el.innerHTML='<div class="muted">No bids yet.</div>';return}
+const W=340,H=220,L=42,R=10,T=10,Bm=30,pts=series.flatMap(s=>s.pts);let t0=Math.min(...pts.map(p=>p.t)),t1=Math.max(...pts.map(p=>p.t));if(t0==t1){t0-=864e5;t1+=864e5}
+let lo=Math.min(...pts.map(p=>p.b),0),hi=Math.max(...pts.map(p=>p.b),0);if(hi-lo<0.1){hi+=0.05;lo-=0.05}const pad=(hi-lo)*0.12;lo-=pad;hi+=pad;
 const x=t=>L+(t-t0)/(t1-t0)*(W-L-R),y=b=>T+(hi-b)/(hi-lo)*(H-T-Bm);let s=`<svg viewBox="0 0 ${W} ${H}" width="100%">`;
 for(let i=0;i<=4;i++){const v=lo+(hi-lo)*i/4;s+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="#eee"/><text x="${L-4}" y="${y(v)+4}" text-anchor="end">${v.toFixed(2)}</text>`}
 s+=`<line x1="${L}" x2="${W-R}" y1="${y(0)}" y2="${y(0)}" stroke="#999" stroke-dasharray="4"/>`;
-const fd=t=>{const d=new Date(t);return(d.getUTCMonth()+1)+'/'+d.getUTCDate()};s+=`<text x="${L}" y="${H-10}">${fd(t0)}</text><text x="${W-R}" y="${H-10}" text-anchor="end">${fd(t1)}</text>`;
-const locs=[...new Set(es.map(e=>e.loc))];let leg='';locs.forEach(l=>{const col=COL[S.locs.indexOf(l)%COL.length]||'#555',pts=es.filter(e=>e.loc==l).map(e=>[x(Date.parse(e.date)),y(B(e))]);
-s+=`<polyline fill="none" stroke="${col}" stroke-width="2.5" points="${pts.map(p=>p.join(',')).join(' ')}"/>`+pts.map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="${col}"/>`).join('');leg+=`<span class="tag" style="background:${col};margin:2px">${esc(l)}</span>`});
+const fd=t=>{const d=new Date(t);return (d.getUTCMonth()+1)+'/'+d.getUTCDate()};s+=`<text x="${L}" y="${H-8}">${fd(t0)}</text><text x="${W-R}" y="${H-8}" text-anchor="end">${fd(t1)}</text>`;
+let leg='';for(const ser of series){const p=ser.pts.map(pt=>[x(pt.t),y(pt.b)]);const dash=ser.dashed?' stroke-dasharray="5 3"':'';
+s+=`<polyline fill="none" stroke="${ser.color}" stroke-width="2.5"${dash} points="${p.map(q=>q.join(',')).join(' ')}"/>`+p.map(q=>`<circle cx="${q[0]}" cy="${q[1]}" r="3.5" fill="${ser.color}"/>`).join('');
+leg+=`<span class="tag" style="background:${ser.color};margin:2px">${esc(ser.name)}</span> `}
 el.innerHTML=s+'</svg><div>'+leg+'</div>'}
 function list(){const es=sorted().reverse();$('list').innerHTML=es.length?es.map(e=>`<div class="ent"><div><b class="${cls(B(e))}">${fmt(B(e))}</b> <span class="tag" style="background:${e.crop=='Corn'?'var(--corn)':'var(--soy)'}">${e.crop}</span><br>${esc(e.loc)}<br><small>${e.date} · cash ${e.cash.toFixed(4).replace(/0{1,2}$/,'')} · ${esc(e.fm)} ${e.fut.toFixed(4).replace(/0{1,2}$/,'')}${e.del?' · '+esc(e.del):''}</small></div><div><button onclick="edit('${e.id}')">Edit</button> <button onclick="del('${e.id}')">🗑</button></div></div>`).join(''):'<div class="muted">No bids yet.</div>'}
 function locs(){$('locs').innerHTML=S.locs.map((l,i)=>`<div class="ent"><div>${esc(l)}</div><div><button onclick="renLoc(${i})">Rename</button> <button onclick="rmLoc(${i})">🗑</button></div></div>`).join('')}
@@ -97,12 +140,16 @@ const q=v=>{v=String(v??'');return/[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':
 function exportCSV(){const rows=[HDR.join(',')].concat(sorted().map(e=>[e.date,e.crop,e.loc,e.del,e.cash,e.fm,e.fut,B(e).toFixed(4),e.note].map(q).join(',')));
 const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([rows.join('\n')],{type:'text/csv'}));a.download='basis-'+today()+'.csv';a.click()}
 function parseCSV(t){const r=[];let row=[],f='',i=0,qt=false;for(;i<t.length;i++){const ch=t[i];if(qt){if(ch=='"'){if(t[i+1]=='"'){f+='"';i++}else qt=false}else f+=ch}else if(ch=='"')qt=true;else if(ch==','){row.push(f);f=''}else if(ch=='\n'||ch=='\r'){if(ch=='\r'&&t[i+1]=='\n')i++;row.push(f);r.push(row);row=[];f=''}else f+=ch}if(f||row.length){row.push(f);r.push(row)}return r.filter(x=>x.some(v=>v.trim()))}
+function parseHistory(t){const r=parseCSV(t);if(!r.length)return [];const h=r.shift().map(x=>x.trim().toLowerCase()),ix=n=>h.indexOf(n),out=[];
+for(const x of r){const cash=parseFloat(x[ix('cash')]),fut=parseFloat(x[ix('futures')]);if(isNaN(cash)||isNaN(fut))continue;const basis=parseFloat(x[ix('basis')]);
+out.push({date:x[ix('date')],commodity:x[ix('commodity')],location:x[ix('location')],delivery_period:x[ix('delivery_period')]||x[ix('delivery')]||'',cash,futures_month:x[ix('futures_month')]||'',futures:fut,basis:isNaN(basis)?r4(cash-fut):basis,source:'posted'})}
+return out.sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:0)}
 function importCSV(inp){const fl=inp.files[0];if(!fl)return;fl.text().then(t=>{const r=parseCSV(t),h=r.shift().map(x=>x.trim().toLowerCase()),ix=n=>h.indexOf(n);let n=0;
 for(const x of r){const cash=parseFloat(x[ix('cash')]),fut=parseFloat(x[ix('futures')]);if(isNaN(cash)||isNaN(fut))continue;const c=/soy|bean/i.test(x[ix('crop')])?'Soybeans':'Corn',loc=(x[ix('location')]||'').trim()||'Unknown';
 if(!S.locs.includes(loc))S.locs.push(loc);S.entries.push({id:Date.now()+''+n+Math.random().toString(36).slice(2,6),date:x[ix('date')],crop:c,loc,del:x[ix('delivery')]||'',cash,fm:x[ix('futures_month')]||'',fut,note:x[ix('notes')]||''});n++}
 persist();render();inp.value='';alert('Imported '+n+' bids.')})}
 function show(v){document.querySelectorAll('main>section').forEach(s=>s.classList.toggle('hide',s.id!='v-'+v));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v==v));scrollTo(0,0)}
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>show(b.dataset.v));
-function render(){const cur=$('f-loc').value;locOpts();if(S.locs.includes(cur))$('f-loc').value=cur;dash();chart('Corn');chart('Soybeans');list();locs()}
-resetForm();fmList();render();
+function render(){const cur=$('f-loc').value;locOpts();if(S.locs.includes(cur))$('f-loc').value=cur;postedView();dash();chart('Corn');chart('Soybeans');list();locs()}
+resetForm();fmList();render();loadPosted();
 </script></body></html>

@@ -1,0 +1,61 @@
+name: Update posted bids
+
+on:
+  schedule:
+    # Hourly 13:00–22:00 UTC, Monday–Friday (US Central trading-day hours).
+    - cron: '0 13-22 * * 1-5'
+  workflow_dispatch:
+
+# contents: write so this job can commit bid data. Pages deploy stays in this
+# workflow because a push made with GITHUB_TOKEN does not start pages.yml.
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Fetch cash bids
+        run: python3 scripts/fetch_bids.py --out "${RUNNER_TEMP}/bids.csv"
+
+      - name: Write latest JSON and append history
+        run: python3 scripts/publish_bids.py "${RUNNER_TEMP}/bids.csv"
+
+      - name: Commit bid data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/bids_latest.json data/bids_history.csv
+          if git diff --cached --quiet; then
+            echo "No bid changes to commit."
+          else
+            git commit -m "Update posted cash bids"
+            git push origin HEAD:main
+          fi
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+          include-hidden-files: true
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
