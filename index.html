@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#2f5d34"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Basis"><title>Basis Tracker</title>
+<link rel="manifest" href="manifest.json"><link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9Ijk2IiBmaWxsPSIjMmY1ZDM0Ii8+PHBhdGggZD0iTTI1NiA3MGMtNDAgNjAtNDAgMTQwIDAgMjAwIDQwLTYwIDQwLTE0MCAwLTIwMHoiIGZpbGw9IiNmMmM5NGMiLz48cGF0aCBkPSJNMjU2IDI3MHYxNzAiIHN0cm9rZT0iI2YyYzk0YyIgc3Ryb2tlLXdpZHRoPSIyMiIvPjxwYXRoIGQ9Ik0yNTYgMzMwYy02MC0xMC0xMDAtNTAtMTEwLTEwMCA2MCAxMCAxMDAgNTAgMTEwIDEwMHpNMjU2IDMzMGM2MC0xMCAxMDAtNTAgMTEwLTEwMC02MCAxMC0xMDAgNTAtMTEwIDEwMHoiIGZpbGw9IiM4ZmM5NmIiLz48L3N2Zz4="><link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--g:#2f5d34;--y:#f2c94c;--bg:#f6f3ea;--c:#fff;--t:#222;--m:#666;--corn:#d4a017;--soy:#4a8a3c}
+*{box-sizing:border-box}body{margin:0;font:17px system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--t);padding-bottom:84px}
+header{background:var(--g);color:#fff;padding:14px 16px calc(14px);padding-top:max(14px,env(safe-area-inset-top));font-weight:700;font-size:20px}
+main{padding:12px;max-width:640px;margin:auto}.card{background:var(--c);border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px #0002}
+h2{margin:0 0 10px;font-size:18px}label{display:block;font-size:14px;color:var(--m);margin:10px 0 4px}
+input,select{width:100%;font-size:18px;padding:12px;border:1px solid #ccc;border-radius:10px;background:#fff;min-height:50px}
+.row{display:flex;gap:10px}.row>*{flex:1}
+.tog{display:flex;gap:8px}.tog button{flex:1}
+button{font-size:18px;padding:14px;border-radius:12px;border:0;min-height:52px;font-weight:600;background:#e6e1d3;color:var(--t)}
+.pri{background:var(--g);color:#fff;width:100%;margin-top:14px}.on.corn{background:var(--corn);color:#fff}.on.soy{background:var(--soy);color:#fff}
+.basis{font-size:40px;font-weight:800;text-align:center;padding:10px;border-radius:12px;background:#f0ede2;margin-top:12px}
+.neg{color:#b03a2e}.pos{color:#2e7d32}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:#fff;border-top:1px solid #ddd;padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;background:none;border-radius:0;font-size:14px;padding:10px 4px;min-height:64px}nav button.on{color:var(--g);border-top:3px solid var(--g)}
+table{width:100%;border-collapse:collapse;font-size:15px}td,th{padding:7px 4px;text-align:right;border-bottom:1px solid #eee}td:first-child,th:first-child{text-align:left}
+.ent{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #eee;gap:8px}.ent small{color:var(--m)}
+.ent button{min-height:44px;padding:8px 12px;font-size:15px}.hide{display:none}.muted{color:var(--m);font-size:14px}
+.tag{display:inline-block;padding:2px 8px;border-radius:8px;color:#fff;font-size:13px}
+svg text{font-size:11px;fill:#555}
+</style></head><body>
+<header>🌽 Martin Farms Basis</header>
+<main>
+<section id="v-add">
+<div class="card"><h2 id="formTitle">Add Bid</h2>
+<label>Date</label><input type="date" id="f-date">
+<label>Crop</label><div class="tog"><button id="b-corn" class="corn on" onclick="setCrop('Corn')">🌽 Corn</button><button id="b-soy" class="soy" onclick="setCrop('Soybeans')">🫘 Soybeans</button></div>
+<label>Location</label><select id="f-loc"></select>
+<label>Delivery period</label><input id="f-del" placeholder="e.g. Harvest, Nov 26, Jan 27">
+<div class="row"><div><label>Cash bid ($/bu)</label><input id="f-cash" type="number" step="0.0025" inputmode="decimal" placeholder="4.10"></div>
+<div><label>Futures month</label><input id="f-fm" list="fms" placeholder="Dec 26"><datalist id="fms"></datalist></div></div>
+<label>Futures price ($/bu)</label><input id="f-fut" type="number" step="0.0025" inputmode="decimal" placeholder="4.45">
+<label>Notes (optional)</label><input id="f-note">
+<div class="basis" id="live">—</div><div class="muted" style="text-align:center">Basis = cash − futures</div>
+<button class="pri" onclick="save()" id="saveBtn">Save Bid</button>
+<button class="hide" id="cancelBtn" style="width:100%;margin-top:8px" onclick="resetForm()">Cancel edit</button>
+</div></section>
+<section id="v-dash" class="hide"><div id="dash"></div></section>
+<section id="v-chart" class="hide">
+<div class="card"><h2>🌽 Corn basis</h2><div id="ch-Corn"></div></div>
+<div class="card"><h2>🫘 Soybean basis</h2><div id="ch-Soybeans"></div></div></section>
+<section id="v-list" class="hide"><div class="card"><h2>All bids</h2><div id="list"></div></div>
+<div class="card"><h2>Backup</h2><button style="width:100%" onclick="exportCSV()">⬇️ Export CSV</button>
+<label>Import CSV</label><input type="file" accept=".csv,text/csv" id="imp" onchange="importCSV(this)"></div></section>
+<section id="v-locs" class="hide"><div class="card"><h2>Locations</h2><div id="locs"></div>
+<label>Add location</label><input id="newLoc" placeholder="Elevator name"><button class="pri" onclick="addLoc()">Add location</button></div></section>
+</main>
+<nav><button class="on" data-v="add">➕<br>Add</button><button data-v="dash">📊<br>Basis</button><button data-v="chart">📈<br>Chart</button><button data-v="list">📋<br>Bids</button><button data-v="locs">📍<br>Places</button></nav>
+<script>
+const K='basisTracker.v1',COL=['#2f5d34','#d4a017','#1f6fb2','#b03a2e','#7b4fa0','#e07b00','#555'];
+let S=JSON.parse(localStorage.getItem(K)||'null')||{locs:['ADM Havana','Cargill Havana','CHS Havana'],entries:[]};
+let crop='Corn',editId=null;const $=id=>document.getElementById(id);
+const persist=()=>localStorage.setItem(K,JSON.stringify(S));
+const fmt=b=>(b>=0?'+':'')+b.toFixed(2);const cls=b=>b<0?'neg':'pos';
+const r4=x=>Math.round(x*10000)/10000;const today=()=>{const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10)};
+function setCrop(c){crop=c;$('b-corn').classList.toggle('on',c=='Corn');$('b-soy').classList.toggle('on',c!='Corn');fmList();live()}
+function fmList(){const y=new Date().getFullYear()%100,ms=crop=='Corn'?['Dec','Mar','May','Jul','Sep']:['Nov','Jan','Mar','May','Jul','Aug','Sep'];let o=[];for(const yy of[y,y+1])for(const m of ms)o.push(m+' '+yy);$('fms').innerHTML=o.map(x=>`<option value="${x}">`).join('')}
+function locOpts(){$('f-loc').innerHTML=S.locs.map(l=>`<option>${esc(l)}</option>`).join('')}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function live(){const c=parseFloat($('f-cash').value),f=parseFloat($('f-fut').value);const e=$('live');if(isNaN(c)||isNaN(f)){e.textContent='—';e.className='basis';return}const b=r4(c-f);e.textContent=fmt(b);e.className='basis '+cls(b)}
+['f-cash','f-fut'].forEach(i=>$(i).addEventListener('input',live));
+function resetForm(){editId=null;$('f-date').value=today();['f-cash','f-fut','f-note'].forEach(i=>$(i).value='');$('formTitle').textContent='Add Bid';$('saveBtn').textContent='Save Bid';$('cancelBtn').classList.add('hide');live()}
+function save(){const c=parseFloat($('f-cash').value),f=parseFloat($('f-fut').value);if(!$('f-date').value||isNaN(c)||isNaN(f)){alert('Enter date, cash bid and futures price.');return}
+const e={id:editId||Date.now()+''+Math.random().toString(36).slice(2,6),date:$('f-date').value,crop,loc:$('f-loc').value,del:$('f-del').value.trim(),cash:c,fm:$('f-fm').value.trim(),fut:f,note:$('f-note').value.trim()};
+if(editId)S.entries=S.entries.map(x=>x.id==editId?e:x);else S.entries.push(e);persist();resetForm();render();toast('Saved')}
+function toast(m){const t=$('live');t.textContent='✓ '+m;t.className='basis pos'}
+function edit(id){const e=S.entries.find(x=>x.id==id);editId=id;$('f-date').value=e.date;setCrop(e.crop);if(!S.locs.includes(e.loc)){S.locs.push(e.loc);locOpts()}$('f-loc').value=e.loc;$('f-del').value=e.del;$('f-cash').value=e.cash;$('f-fm').value=e.fm;$('f-fut').value=e.fut;$('f-note').value=e.note||'';$('formTitle').textContent='Edit Bid';$('saveBtn').textContent='Update Bid';$('cancelBtn').classList.remove('hide');live();show('add')}
+function del(id){if(confirm('Delete this bid?')){S.entries=S.entries.filter(x=>x.id!=id);persist();render()}}
+const B=e=>r4(e.cash-e.fut);const sorted=()=>[...S.entries].sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:a.id<b.id?-1:1);
+function dash(){let h='';for(const c of['Corn','Soybeans']){const es=sorted().filter(e=>e.crop==c);h+=`<div class="card"><h2>${c=='Corn'?'🌽':'🫘'} ${c}</h2>`;if(!es.length){h+='<div class="muted">No bids yet.</div></div>';continue}
+h+='<table><tr><th>Location</th><th>Latest</th><th>Avg</th><th>High</th><th>Low</th></tr>';const locs=[...new Set(es.map(e=>e.loc))];
+for(const l of locs){const le=es.filter(e=>e.loc==l),bs=le.map(B),last=le[le.length-1],lb=B(last),av=bs.reduce((a,b)=>a+b,0)/bs.length;
+h+=`<tr><td>${esc(l)}<br><small class="muted">${last.date.slice(5)} ${esc(last.fm)}</small></td><td class="${cls(lb)}"><b>${fmt(lb)}</b></td><td>${fmt(av)}</td><td>${fmt(Math.max(...bs))}</td><td>${fmt(Math.min(...bs))}</td></tr>`}
+h+='</table></div>'}$('dash').innerHTML=h}
+function chart(c){const es=sorted().filter(e=>e.crop==c),el=$('ch-'+c);if(!es.length){el.innerHTML='<div class="muted">No bids yet.</div>';return}
+const W=340,H=220,L=40,R=10,T=10,Bm=30,ts=es.map(e=>Date.parse(e.date)),bs=es.map(B);let t0=Math.min(...ts),t1=Math.max(...ts);if(t0==t1){t0-=864e5;t1+=864e5}
+let lo=Math.min(...bs,0),hi=Math.max(...bs,0);if(hi-lo<0.1){hi+=0.05;lo-=0.05}const pad=(hi-lo)*0.1;lo-=pad;hi+=pad;
+const x=t=>L+(t-t0)/(t1-t0)*(W-L-R),y=b=>T+(hi-b)/(hi-lo)*(H-T-Bm);let s=`<svg viewBox="0 0 ${W} ${H}" width="100%">`;
+for(let i=0;i<=4;i++){const v=lo+(hi-lo)*i/4;s+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="#eee"/><text x="${L-4}" y="${y(v)+4}" text-anchor="end">${v.toFixed(2)}</text>`}
+s+=`<line x1="${L}" x2="${W-R}" y1="${y(0)}" y2="${y(0)}" stroke="#999" stroke-dasharray="4"/>`;
+const fd=t=>{const d=new Date(t);return(d.getUTCMonth()+1)+'/'+d.getUTCDate()};s+=`<text x="${L}" y="${H-10}">${fd(t0)}</text><text x="${W-R}" y="${H-10}" text-anchor="end">${fd(t1)}</text>`;
+const locs=[...new Set(es.map(e=>e.loc))];let leg='';locs.forEach(l=>{const col=COL[S.locs.indexOf(l)%COL.length]||'#555',pts=es.filter(e=>e.loc==l).map(e=>[x(Date.parse(e.date)),y(B(e))]);
+s+=`<polyline fill="none" stroke="${col}" stroke-width="2.5" points="${pts.map(p=>p.join(',')).join(' ')}"/>`+pts.map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="4" fill="${col}"/>`).join('');leg+=`<span class="tag" style="background:${col};margin:2px">${esc(l)}</span>`});
+el.innerHTML=s+'</svg><div>'+leg+'</div>'}
+function list(){const es=sorted().reverse();$('list').innerHTML=es.length?es.map(e=>`<div class="ent"><div><b class="${cls(B(e))}">${fmt(B(e))}</b> <span class="tag" style="background:${e.crop=='Corn'?'var(--corn)':'var(--soy)'}">${e.crop}</span><br>${esc(e.loc)}<br><small>${e.date} · cash ${e.cash.toFixed(4).replace(/0{1,2}$/,'')} · ${esc(e.fm)} ${e.fut.toFixed(4).replace(/0{1,2}$/,'')}${e.del?' · '+esc(e.del):''}</small></div><div><button onclick="edit('${e.id}')">Edit</button> <button onclick="del('${e.id}')">🗑</button></div></div>`).join(''):'<div class="muted">No bids yet.</div>'}
+function locs(){$('locs').innerHTML=S.locs.map((l,i)=>`<div class="ent"><div>${esc(l)}</div><div><button onclick="renLoc(${i})">Rename</button> <button onclick="rmLoc(${i})">🗑</button></div></div>`).join('')}
+function addLoc(){const v=$('newLoc').value.trim();if(v&&!S.locs.includes(v)){S.locs.push(v);persist();$('newLoc').value='';render()}}
+function renLoc(i){const o=S.locs[i],n=(prompt('Rename location',o)||'').trim();if(!n||n==o)return;S.locs[i]=n;S.entries.forEach(e=>{if(e.loc==o)e.loc=n});persist();render()}
+function rmLoc(i){if(confirm('Remove "'+S.locs[i]+'" from the picker? Saved bids stay.')){S.locs.splice(i,1);persist();render()}}
+const HDR=['date','crop','location','delivery','cash','futures_month','futures','basis','notes'];
+const q=v=>{v=String(v??'');return/[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
+function exportCSV(){const rows=[HDR.join(',')].concat(sorted().map(e=>[e.date,e.crop,e.loc,e.del,e.cash,e.fm,e.fut,B(e).toFixed(4),e.note].map(q).join(',')));
+const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([rows.join('\n')],{type:'text/csv'}));a.download='basis-'+today()+'.csv';a.click()}
+function parseCSV(t){const r=[];let row=[],f='',i=0,qt=false;for(;i<t.length;i++){const ch=t[i];if(qt){if(ch=='"'){if(t[i+1]=='"'){f+='"';i++}else qt=false}else f+=ch}else if(ch=='"')qt=true;else if(ch==','){row.push(f);f=''}else if(ch=='\n'||ch=='\r'){if(ch=='\r'&&t[i+1]=='\n')i++;row.push(f);r.push(row);row=[];f=''}else f+=ch}if(f||row.length){row.push(f);r.push(row)}return r.filter(x=>x.some(v=>v.trim()))}
+function importCSV(inp){const fl=inp.files[0];if(!fl)return;fl.text().then(t=>{const r=parseCSV(t),h=r.shift().map(x=>x.trim().toLowerCase()),ix=n=>h.indexOf(n);let n=0;
+for(const x of r){const cash=parseFloat(x[ix('cash')]),fut=parseFloat(x[ix('futures')]);if(isNaN(cash)||isNaN(fut))continue;const c=/soy|bean/i.test(x[ix('crop')])?'Soybeans':'Corn',loc=(x[ix('location')]||'').trim()||'Unknown';
+if(!S.locs.includes(loc))S.locs.push(loc);S.entries.push({id:Date.now()+''+n+Math.random().toString(36).slice(2,6),date:x[ix('date')],crop:c,loc,del:x[ix('delivery')]||'',cash,fm:x[ix('futures_month')]||'',fut,note:x[ix('notes')]||''});n++}
+persist();render();inp.value='';alert('Imported '+n+' bids.')})}
+function show(v){document.querySelectorAll('main>section').forEach(s=>s.classList.toggle('hide',s.id!='v-'+v));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v==v));scrollTo(0,0)}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>show(b.dataset.v));
+function render(){const cur=$('f-loc').value;locOpts();if(S.locs.includes(cur))$('f-loc').value=cur;dash();chart('Corn');chart('Soybeans');list();locs()}
+resetForm();fmList();render();
+</script></body></html>
