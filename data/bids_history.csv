@@ -34,3 +34,7 @@ date,commodity,location,delivery_period,cash,futures_month,futures,basis
 2026-10-16,Soybeans,Cargill Havana,2027-04-01 to 2027-04-30 (Apr 2027),12.7675,May 2027 (ZSK27),12.8975,-0.1300
 2026-10-16,Soybeans,Cargill Havana,2027-05-01 to 2027-05-31 (May 2027),12.8175,May 2027 (ZSK27),12.8975,-0.0800
 2026-10-16,Soybeans,Cargill Havana,2027-07-01 to 2027-07-31 (Jul 2027),12.8775,Jul 2027 (ZSN27),12.9575,-0.0800
+2026-10-16,Corn,ADM Havana,2026-10-16 to 2026-10-31 (Oct 2026),4.4725,Dec 2026 (ZCZ26),4.7425,-0.2700
+2026-10-16,Corn,Cargill Havana,2026-10-16 to 2026-10-31 (Oct 2026),4.4225,Dec 2026 (ZCZ26),4.7425,-0.3200
+2026-10-16,Soybeans,ADM Havana,2026-10-16 to 2026-10-31 (Oct 2026),12.1600,Nov 2026 (ZSX26),12.5400,-0.3800
+2026-10-16,Soybeans,Cargill Havana,2026-10-16 to 2026-10-31 (Oct 2026),12.1600,Nov 2026 (ZSX26),12.5400,-0.3800
