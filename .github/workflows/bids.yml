@@ -5,18 +5,20 @@ on:
     # Hourly 13:00–22:00 UTC, Monday–Friday (US Central trading-day hours).
     - cron: '0 13-22 * * 1-5'
   workflow_dispatch:
-  # A push of the fetcher also runs it once on the runner. Data-only commits
-  # from this job do not match these paths, so they do not loop.
+  # A push of the fetcher or sealer also runs it once on the runner.
+  # Data-only commits from this job do not match these paths, so they do not loop.
   push:
     branches:
       - main
     paths:
       - 'scripts/fetch_bids.py'
+      - 'scripts/seal_bids.py'
       - 'scripts/publish_bids.py'
       - '.github/workflows/bids.yml'
 
-# contents: write so this job can commit bid data. Pages deploy stays in this
-# workflow because a push made with GITHUB_TOKEN does not start pages.yml.
+# contents: write so this job can commit the encrypted bid file. Pages deploy
+# stays in this workflow because a push made with GITHUB_TOKEN does not start
+# pages.yml.
 permissions:
   contents: write
   pages: write
@@ -33,22 +35,50 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # Fail before checkout, fetch, commit, or Pages upload. An empty secret
+      # must not publish plaintext bids or replace the current site.
+      - name: Require BIDS_PASSCODE
+        env:
+          BIDS_PASSCODE: ${{ secrets.BIDS_PASSCODE }}
+        run: |
+          if [ -z "${BIDS_PASSCODE}" ]; then
+            echo "::error title=BIDS_PASSCODE missing::Add a repository Actions secret named BIDS_PASSCODE at https://github.com/cartermartin1032/Basis-/settings/secrets/actions/new — this job will not publish plaintext bids."
+            exit 1
+          fi
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
           ref: main
 
+      - name: Install sealer
+        run: python3 -m pip install --disable-pip-version-check cryptography
+
       - name: Fetch cash bids
         run: python3 scripts/fetch_bids.py --out "${RUNNER_TEMP}/bids.csv"
 
-      - name: Write latest JSON and append history
-        run: python3 scripts/publish_bids.py "${RUNNER_TEMP}/bids.csv"
+      - name: Encrypt posted bids
+        env:
+          BIDS_PASSCODE: ${{ secrets.BIDS_PASSCODE }}
+        run: python3 scripts/seal_bids.py "${RUNNER_TEMP}/bids.csv"
 
-      - name: Commit bid data
+      - name: Refuse plaintext publish
+        run: |
+          if [ -e data/bids_latest.json ] || [ -e data/bids_history.csv ]; then
+            echo "::error title=Plaintext bids still present::data/bids_latest.json or data/bids_history.csv is still in the worktree. Refusing to deploy."
+            exit 1
+          fi
+          if [ ! -s data/bids.enc.json ]; then
+            echo "::error title=Encrypted bids missing::data/bids.enc.json was not written. Refusing to deploy."
+            exit 1
+          fi
+
+      - name: Commit encrypted bids
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/bids_latest.json data/bids_history.csv
+          git add data/bids.enc.json
+          git rm -f --ignore-unmatch data/bids_latest.json data/bids_history.csv
           if git diff --cached --quiet; then
             echo "No bid changes to commit."
           else
@@ -63,7 +93,6 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
-          include-hidden-files: true
 
       - name: Deploy to GitHub Pages
         id: deployment

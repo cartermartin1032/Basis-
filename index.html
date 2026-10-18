@@ -23,6 +23,7 @@ h3{margin:14px 0 6px;font-size:16px}.scroll{overflow-x:auto;-webkit-overflow-scr
 .ent{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #eee;gap:8px}.ent small{color:var(--m)}
 .ent button{min-height:44px;padding:8px 12px;font-size:15px}.hide{display:none}.muted{color:var(--m);font-size:14px}
 .tag{display:inline-block;padding:2px 8px;border-radius:8px;color:#fff;font-size:13px}
+.err{color:#b03a2e;font-weight:600;margin:0 0 8px}
 svg text{font-size:11px;fill:#555}
 </style></head><body>
 <header>🌽 Martin Farms Basis</header>
@@ -53,7 +54,9 @@ svg text{font-size:11px;fill:#555}
 <div class="card"><h2>Backup</h2><button style="width:100%" onclick="exportCSV()">⬇️ Export CSV</button>
 <label>Import CSV</label><input type="file" accept=".csv,text/csv" id="imp" onchange="importCSV(this)"></div></section>
 <section id="v-locs" class="hide"><div class="card"><h2>Locations</h2><div id="locs"></div>
-<label>Add location</label><input id="newLoc" placeholder="Elevator name"><button class="pri" onclick="addLoc()">Add location</button></div></section>
+<label>Add location</label><input id="newLoc" placeholder="Elevator name"><button class="pri" onclick="addLoc()">Add location</button></div>
+<div class="card hide" id="pass-card"><h2>Passcode</h2><div class="muted" id="pass-help"></div>
+<button style="width:100%;margin-top:10px" type="button" onclick="lockPasscode()">Lock / forget passcode</button></div></section>
 </main>
 <nav><button class="on" data-v="posted">📌<br>Posted</button><button data-v="add">➕<br>Add</button><button data-v="dash">📊<br>Basis</button><button data-v="chart">📈<br>Chart</button><button data-v="list">📋<br>Bids</button><button data-v="locs">📍<br>Places</button></nav>
 <script>
@@ -67,8 +70,10 @@ function setCrop(c){crop=c;$('b-corn').classList.toggle('on',c=='Corn');$('b-soy
 function fmList(){const y=new Date().getFullYear()%100,ms=crop=='Corn'?['Dec','Mar','May','Jul','Sep']:['Nov','Jan','Mar','May','Jul','Aug','Sep'];let o=[];for(const yy of[y,y+1])for(const m of ms)o.push(m+' '+yy);$('fms').innerHTML=o.map(x=>`<option value="${x}">`).join('')}
 function locOpts(){$('f-loc').innerHTML=S.locs.map(l=>`<option>${esc(l)}</option>`).join('')}
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
-const PK=K+'.postedJson',HK=K+'.postedCsv';
-let posted={fetched_at:null,bids:[]},postedHist=[],postedStatus='loading';
+const PK=K+'.postedJson',HK=K+'.postedCsv',PASS_K=K+'.passcode',ENC_K=K+'.postedEnc';
+let posted={fetched_at:null,notes:[],bids:[]},postedHist=[],postedStatus='loading';
+let encMode=false,encFile=null,passError='',lockNote='',unlocking=false,encFresh=true;
+function emptyPosted(){return {fetched_at:null,notes:[],bids:[]}}
 function px(n){const x=Math.round(Number(n)*10000)/10000;if(!isFinite(x))return '—';return x.toFixed(4).replace(/0+$/,'').replace(/\.$/,'')}
 function shortDel(p){const m=String(p||'').match(/\(([^)]+)\)\s*$/);return m?m[1]:(p||'')}
 function futLabel(b){const m=String(b.futures_month||'').replace(/\s*\([^)]*\)\s*$/,'').trim();return (m||b.futures_month||'Futures')+' '+px(b.futures)}
@@ -79,12 +84,49 @@ function readCachedLatest(){try{const j=JSON.parse(localStorage.getItem(PK)||'nu
 function updatedLabel(){const raw=posted.fetched_at||(posted.bids[0]&&posted.bids[0].date)||'';if(!raw)return '';const d=new Date(raw);if(isNaN(d.getTime()))return String(raw);return d.toLocaleString(undefined,{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'})}
 async function loadOne(url){const ctrl=typeof AbortController=='function'?new AbortController():null;const timer=ctrl?setTimeout(()=>ctrl.abort(),12000):null;try{const r=await fetch(url+(url.includes('?')?'&':'?')+'v='+Date.now(),{cache:'no-store',signal:ctrl?ctrl.signal:undefined});if(!r.ok)throw new Error('HTTP '+r.status);return await r.text()}finally{if(timer)clearTimeout(timer)}}
 function remember(key,value){try{localStorage.setItem(key,value)}catch(e){}}
-async function loadPosted(){let jText=null,csv=null;try{jText=await loadOne('./data/bids_latest.json')}catch(e){}try{csv=await loadOne('./data/bids_history.csv')}catch(e){}
+async function loadPostedPlain(){let jText=null,csv=null;try{jText=await loadOne('./data/bids_latest.json')}catch(e){}try{csv=await loadOne('./data/bids_history.csv')}catch(e){}
 if(jText!=null){try{posted=normalizeLatest(JSON.parse(jText));remember(PK,JSON.stringify(posted))}catch(e){posted=readCachedLatest();jText=null}}else posted=readCachedLatest();
 if(csv!=null){try{postedHist=parseHistory(csv);remember(HK,csv)}catch(e){csv=null;const cached=localStorage.getItem(HK);postedHist=cached?parseHistory(cached):[]}}else{const cached=localStorage.getItem(HK);postedHist=cached?parseHistory(cached):[]}
 const liveJ=jText!=null,liveC=csv!=null;if(liveJ||liveC)postedStatus=(liveJ&&liveC)?'ok':'partial';else if((posted.bids&&posted.bids.length)||postedHist.length)postedStatus='cached';else postedStatus='offline';render()}
+async function loadPosted(){let encText=null;try{encText=await loadOne('./data/bids.enc.json')}catch(e){}
+if(encText!=null){let file=null;try{file=JSON.parse(encText)}catch(e){}
+if(file&&file.ciphertext&&file.salt&&file.iv){await openEnc(file,encText,true);return}}
+const cachedEnc=localStorage.getItem(ENC_K);
+if(cachedEnc){try{const file=JSON.parse(cachedEnc);if(file&&file.ciphertext&&file.salt&&file.iv){await openEnc(file,null,false);return}}catch(e){}}
+await loadPostedPlain()}
+function b64ToBuf(s){const bin=atob(s),out=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)out[i]=bin.charCodeAt(i);return out}
+async function decryptEnc(file,passcode){
+if(!crypto.subtle)throw Object.assign(new Error('no webcrypto'),{name:'NotSupportedError'});
+if(!file||file.v!==1||file.kdf!=='PBKDF2-SHA256'||!(file.iterations>=200000))throw Object.assign(new Error('unsupported'),{name:'NotSupportedError'});
+const salt=b64ToBuf(file.salt),iv=b64ToBuf(file.iv),ct=b64ToBuf(file.ciphertext);
+const material=await crypto.subtle.importKey('raw',new TextEncoder().encode(passcode),'PBKDF2',false,['deriveKey']);
+const key=await crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:file.iterations,hash:'SHA-256'},material,{name:'AES-GCM',length:256},false,['decrypt']);
+const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv},key,ct);
+return JSON.parse(new TextDecoder().decode(plain))}
+function historyFromPayload(rows){return (rows||[]).map(b=>({date:b.date,commodity:b.commodity,location:b.location,delivery_period:b.delivery_period||b.delivery||'',cash:+b.cash,futures_month:b.futures_month||'',futures:+b.futures,basis:b.basis==null||b.basis===''?r4(+b.cash-+b.futures):+b.basis,source:'posted'})).filter(b=>b.commodity&&b.location&&isFinite(b.cash)&&isFinite(b.futures)).sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:0)}
+function applyPayload(payload){posted=normalizeLatest(payload);postedHist=historyFromPayload(payload.history)}
+function passCard(){const err=passError?'<div class="err">'+esc(passError)+'</div>':'';const note=lockNote?'<div class="muted">'+esc(lockNote)+'</div>':'';
+return '<div class="card"><h2>Unlock posted bids</h2><div class="muted">Enter the passcode to see elevator bids. This phone will remember it.</div>'+note+err+'<form id="pass-form" onsubmit="submitPass(event)"><label>Passcode</label><input id="f-pass" type="password" autocomplete="current-password" enterkeyhint="go"><button class="pri" type="submit">Unlock</button></form></div>'}
+function focusPass(){const sec=$('v-posted');if(!sec||sec.classList.contains('hide'))return;const input=$('f-pass');if(input){input.focus();input.select()}}
+function submitPass(ev){ev.preventDefault();if(unlocking)return;const code=$('f-pass').value;if(!code){passError='Enter the passcode.';lockNote='';render();focusPass();return}
+unlocking=true;const btn=ev.target.querySelector('button');if(btn){btn.disabled=true;btn.textContent='Checking…'}
+tryUnlock(code,true,encFresh?'ok':'cached').finally(()=>{unlocking=false})}
+async function tryUnlock(code,fromUser,status){try{const payload=await decryptEnc(encFile,code);localStorage.setItem(PASS_K,code);passError='';lockNote='';applyPayload(payload);postedStatus=status||'ok';try{localStorage.removeItem(PK);localStorage.removeItem(HK)}catch(e){}render()}
+catch(e){posted=emptyPosted();postedHist=[];postedStatus='locked';
+if(e&&e.name==='NotSupportedError')passError='This phone cannot unlock posted bids.';
+else if(fromUser){passError='Wrong passcode.';lockNote=''}
+else{try{localStorage.removeItem(PASS_K)}catch(err){}passError='Saved passcode no longer works. Enter it again.'}
+render();focusPass()}}
+function showLocked(){posted=emptyPosted();postedHist=[];postedStatus='locked';render();focusPass()}
+async function openEnc(file,text,fresh){encMode=true;encFile=file;encFresh=fresh;if(text)remember(ENC_K,text);try{localStorage.removeItem(PK);localStorage.removeItem(HK)}catch(e){}
+const saved=localStorage.getItem(PASS_K)||'';if(saved)await tryUnlock(saved,false,fresh?'ok':'cached');else showLocked()}
+function passHelp(){const card=$('pass-card');if(card)card.classList.toggle('hide',!encMode);const el=$('pass-help');if(el&&encMode)el.textContent='Posted bids are locked. This phone remembers the passcode until you use the button below.'}
+function lockPasscode(){if(!confirm('Forget the passcode on this phone?'))return;try{localStorage.removeItem(PASS_K);localStorage.removeItem(PK);localStorage.removeItem(HK)}catch(e){}
+posted=emptyPosted();postedHist=[];passError='';if(encMode&&encFile){lockNote='Passcode forgotten on this phone.';postedStatus='locked';render();show('posted');focusPass()}
+else{lockNote='';const help=$('pass-help');if(help)help.textContent='Passcode forgotten on this phone. Posted bids are not locked yet.'}}
 function postedView(){const meta=$('posted-meta'),el=$('posted');
 if(postedStatus=='loading'){meta.innerHTML='<div class="muted">Loading posted bids…</div>';el.innerHTML='';return}
+if(postedStatus=='locked'){meta.innerHTML='';el.innerHTML=passCard();return}
 if(postedStatus=='offline'&&!(posted.bids&&posted.bids.length)){meta.innerHTML='<div class="muted">Posted bids are not available offline. Bids you enter on this phone are still saved.</div>';el.innerHTML='';return}
 const when=updatedLabel();let note=postedStatus=='cached'?' · saved on this phone (offline)':postedStatus=='partial'?' · some data could not be refreshed':'';
 const flags=(posted.notes||[]).map(n=>'<div class="muted">'+esc(n)+'</div>').join('');
@@ -151,6 +193,6 @@ if(!S.locs.includes(loc))S.locs.push(loc);S.entries.push({id:Date.now()+''+n+Mat
 persist();render();inp.value='';alert('Imported '+n+' bids.')})}
 function show(v){document.querySelectorAll('main>section').forEach(s=>s.classList.toggle('hide',s.id!='v-'+v));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v==v));scrollTo(0,0)}
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>show(b.dataset.v));
-function render(){const cur=$('f-loc').value;locOpts();if(S.locs.includes(cur))$('f-loc').value=cur;postedView();dash();chart('Corn');chart('Soybeans');list();locs()}
+function render(){const cur=$('f-loc').value;locOpts();if(S.locs.includes(cur))$('f-loc').value=cur;passHelp();postedView();dash();chart('Corn');chart('Soybeans');list();locs()}
 resetForm();fmList();render();loadPosted();
 </script></body></html>
