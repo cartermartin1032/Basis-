@@ -73,8 +73,8 @@ function px(n){const x=Math.round(Number(n)*10000)/10000;if(!isFinite(x))return 
 function shortDel(p){const m=String(p||'').match(/\(([^)]+)\)\s*$/);return m?m[1]:(p||'')}
 function futLabel(b){const m=String(b.futures_month||'').replace(/\s*\([^)]*\)\s*$/,'').trim();return (m||b.futures_month||'Futures')+' '+px(b.futures)}
 function locOrder(names){const known=S.locs.filter(l=>names.includes(l));const rest=names.filter(l=>!known.includes(l));return known.concat(rest)}
-function normalizeLatest(j){const bids=Array.isArray(j)?j:(j&&Array.isArray(j.bids)?j.bids:[]);const fetched_at=(j&&!Array.isArray(j)&&j.fetched_at)||null;
-return {fetched_at,bids:bids.map(b=>({date:b.date,commodity:b.commodity,location:b.location,delivery_period:b.delivery_period||b.delivery||'',cash:+b.cash,futures_month:b.futures_month||'',futures:+b.futures,basis:b.basis==null||b.basis===''?r4(+b.cash-+b.futures):+b.basis})).filter(b=>b.commodity&&b.location&&isFinite(b.cash)&&isFinite(b.futures))}}
+function normalizeLatest(j){const bids=Array.isArray(j)?j:(j&&Array.isArray(j.bids)?j.bids:[]);const fetched_at=(j&&!Array.isArray(j)&&j.fetched_at)||null;const notes=j&&!Array.isArray(j)&&Array.isArray(j.notes)?j.notes.filter(Boolean):[];
+return {fetched_at,notes,bids:bids.map(b=>({date:b.date,commodity:b.commodity,location:b.location,delivery_period:b.delivery_period||b.delivery||'',cash:+b.cash,futures_month:b.futures_month||'',futures:+b.futures,basis:b.basis==null||b.basis===''?r4(+b.cash-+b.futures):+b.basis})).filter(b=>b.commodity&&b.location&&isFinite(b.cash)&&isFinite(b.futures))}}
 function readCachedLatest(){try{const j=JSON.parse(localStorage.getItem(PK)||'null');if(j)return normalizeLatest(j)}catch(e){}return {fetched_at:null,bids:[]}}
 function updatedLabel(){const raw=posted.fetched_at||(posted.bids[0]&&posted.bids[0].date)||'';if(!raw)return '';const d=new Date(raw);if(isNaN(d.getTime()))return String(raw);return d.toLocaleString(undefined,{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'})}
 async function loadOne(url){const ctrl=typeof AbortController=='function'?new AbortController():null;const timer=ctrl?setTimeout(()=>ctrl.abort(),12000):null;try{const r=await fetch(url+(url.includes('?')?'&':'?')+'v='+Date.now(),{cache:'no-store',signal:ctrl?ctrl.signal:undefined});if(!r.ok)throw new Error('HTTP '+r.status);return await r.text()}finally{if(timer)clearTimeout(timer)}}
@@ -87,7 +87,8 @@ function postedView(){const meta=$('posted-meta'),el=$('posted');
 if(postedStatus=='loading'){meta.innerHTML='<div class="muted">Loading posted bids…</div>';el.innerHTML='';return}
 if(postedStatus=='offline'&&!(posted.bids&&posted.bids.length)){meta.innerHTML='<div class="muted">Posted bids are not available offline. Bids you enter on this phone are still saved.</div>';el.innerHTML='';return}
 const when=updatedLabel();let note=postedStatus=='cached'?' · saved on this phone (offline)':postedStatus=='partial'?' · some data could not be refreshed':'';
-meta.innerHTML='<div class="muted">Updated '+esc(when||'—')+esc(note)+'</div>';
+const flags=(posted.notes||[]).map(n=>'<div class="muted">'+esc(n)+'</div>').join('');
+meta.innerHTML='<div class="muted">Updated '+esc(when||'—')+esc(note)+'</div>'+flags;
 const bids=posted.bids||[];if(!bids.length){el.innerHTML='<div class="card"><div class="muted">No posted bids right now.</div></div>';return}
 let h='';for(const c of ['Corn','Soybeans']){const rows=bids.filter(b=>b.commodity==c);if(!rows.length)continue;
 h+=`<div class="card"><h2>${c=='Corn'?'🌽':'🫘'} ${c}</h2>`;

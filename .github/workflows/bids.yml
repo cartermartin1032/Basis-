@@ -5,6 +5,15 @@ on:
     # Hourly 13:00–22:00 UTC, Monday–Friday (US Central trading-day hours).
     - cron: '0 13-22 * * 1-5'
   workflow_dispatch:
+  # A push of the fetcher also runs it once on the runner. Data-only commits
+  # from this job do not match these paths, so they do not loop.
+  push:
+    branches:
+      - main
+    paths:
+      - 'scripts/fetch_bids.py'
+      - 'scripts/publish_bids.py'
+      - '.github/workflows/bids.yml'
 
 # contents: write so this job can commit bid data. Pages deploy stays in this
 # workflow because a push made with GITHUB_TOKEN does not start pages.yml.

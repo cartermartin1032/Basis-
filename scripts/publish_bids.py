@@ -58,8 +58,20 @@ def main():
         sys.exit("no bids in fetch; leaving published data unchanged")
     rows.sort(key=sort_key)
 
+    meta_path = src.with_suffix(".meta.json")
+    notes, sources = [], {}
+    if meta_path.exists():
+        meta = json.loads(meta_path.read_text())
+        notes = list(meta.get("notes") or [])
+        sources = dict(meta.get("sources") or {})
+
     fetched_at = datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
-    latest_path.write_text(json.dumps({"fetched_at": fetched_at, "bids": rows}, indent=2) + "\n")
+    latest_path.write_text(json.dumps({
+        "fetched_at": fetched_at,
+        "notes": notes,
+        "sources": sources,
+        "bids": rows,
+    }, indent=2) + "\n")
 
     existing = []
     if hist_path.exists() and hist_path.stat().st_size:
