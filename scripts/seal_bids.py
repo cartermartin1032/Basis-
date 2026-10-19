@@ -9,8 +9,9 @@ ciphertext only.
 
 History lives inside that ciphertext. On later runs the previous file is
 decrypted, new rows are appended (deduped by date + location + commodity +
-delivery period), and the result is re-encrypted. A missing or empty
-passphrase fails before any plaintext is written.
+delivery period), and the result is re-encrypted. The workflow calls this
+only when BIDS_PASSCODE is set. A missing or empty passphrase still fails
+here, before any plaintext is written.
 """
 import base64
 import csv

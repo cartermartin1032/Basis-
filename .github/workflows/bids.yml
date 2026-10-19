@@ -16,9 +16,8 @@ on:
       - 'scripts/publish_bids.py'
       - '.github/workflows/bids.yml'
 
-# contents: write so this job can commit the encrypted bid file. Pages deploy
-# stays in this workflow because a push made with GITHUB_TOKEN does not start
-# pages.yml.
+# contents: write so this job can commit bid data. Pages deploy stays in this
+# workflow because a push made with GITHUB_TOKEN does not start pages.yml.
 permissions:
   contents: write
   pages: write
@@ -35,34 +34,51 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      # Fail before checkout, fetch, commit, or Pages upload. An empty secret
-      # must not publish plaintext bids or replace the current site.
-      - name: Require BIDS_PASSCODE
-        env:
-          BIDS_PASSCODE: ${{ secrets.BIDS_PASSCODE }}
-        run: |
-          if [ -z "${BIDS_PASSCODE}" ]; then
-            echo "::error title=BIDS_PASSCODE missing::Add a repository Actions secret named BIDS_PASSCODE at https://github.com/cartermartin1032/Basis-/settings/secrets/actions/new — this job will not publish plaintext bids."
-            exit 1
-          fi
-
       - name: Checkout
         uses: actions/checkout@v4
         with:
           ref: main
 
-      - name: Install sealer
-        run: python3 -m pip install --disable-pip-version-check cryptography
+      # Missing secret: keep the unlocked plaintext board and warn.
+      # Secret present: seal, and do not publish plaintext.
+      - name: Choose publish mode
+        id: mode
+        env:
+          BIDS_PASSCODE: ${{ secrets.BIDS_PASSCODE }}
+        run: |
+          if [ -z "${BIDS_PASSCODE}" ]; then
+            echo "::warning title=BIDS_PASSCODE missing::Posted bids stay unlocked. Add a repository Actions secret named BIDS_PASSCODE at https://github.com/cartermartin1032/Basis-/settings/secrets/actions/new to seal them."
+            echo "mode=plain" >> "$GITHUB_OUTPUT"
+          else
+            echo "BIDS_PASSCODE is set. Sealing posted bids."
+            echo "mode=sealed" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Fetch cash bids
         run: python3 scripts/fetch_bids.py --out "${RUNNER_TEMP}/bids.csv"
 
+      - name: Publish plaintext bids
+        if: steps.mode.outputs.mode == 'plain'
+        run: |
+          python3 scripts/publish_bids.py "${RUNNER_TEMP}/bids.csv"
+          rm -f data/bids.enc.json
+          if [ ! -s data/bids_latest.json ] || [ ! -s data/bids_history.csv ]; then
+            echo "::error title=Plaintext bids missing::data/bids_latest.json or data/bids_history.csv was not written."
+            exit 1
+          fi
+
+      - name: Install sealer
+        if: steps.mode.outputs.mode == 'sealed'
+        run: python3 -m pip install --disable-pip-version-check cryptography
+
       - name: Encrypt posted bids
+        if: steps.mode.outputs.mode == 'sealed'
         env:
           BIDS_PASSCODE: ${{ secrets.BIDS_PASSCODE }}
         run: python3 scripts/seal_bids.py "${RUNNER_TEMP}/bids.csv"
 
       - name: Refuse plaintext publish
+        if: steps.mode.outputs.mode == 'sealed'
         run: |
           if [ -e data/bids_latest.json ] || [ -e data/bids_history.csv ]; then
             echo "::error title=Plaintext bids still present::data/bids_latest.json or data/bids_history.csv is still in the worktree. Refusing to deploy."
@@ -73,12 +89,19 @@ jobs:
             exit 1
           fi
 
-      - name: Commit encrypted bids
+      - name: Commit bid data
+        env:
+          PUBLISH_MODE: ${{ steps.mode.outputs.mode }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/bids.enc.json
-          git rm -f --ignore-unmatch data/bids_latest.json data/bids_history.csv
+          if [ "$PUBLISH_MODE" = "sealed" ]; then
+            git add data/bids.enc.json
+            git rm -f --ignore-unmatch data/bids_latest.json data/bids_history.csv
+          else
+            git add data/bids_latest.json data/bids_history.csv
+            git rm -f --ignore-unmatch data/bids.enc.json
+          fi
           if git diff --cached --quiet; then
             echo "No bid changes to commit."
           else

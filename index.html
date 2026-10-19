@@ -88,9 +88,10 @@ async function loadPostedPlain(){let jText=null,csv=null;try{jText=await loadOne
 if(jText!=null){try{posted=normalizeLatest(JSON.parse(jText));remember(PK,JSON.stringify(posted))}catch(e){posted=readCachedLatest();jText=null}}else posted=readCachedLatest();
 if(csv!=null){try{postedHist=parseHistory(csv);remember(HK,csv)}catch(e){csv=null;const cached=localStorage.getItem(HK);postedHist=cached?parseHistory(cached):[]}}else{const cached=localStorage.getItem(HK);postedHist=cached?parseHistory(cached):[]}
 const liveJ=jText!=null,liveC=csv!=null;if(liveJ||liveC)postedStatus=(liveJ&&liveC)?'ok':'partial';else if((posted.bids&&posted.bids.length)||postedHist.length)postedStatus='cached';else postedStatus='offline';render()}
-async function loadPosted(){let encText=null;try{encText=await loadOne('./data/bids.enc.json')}catch(e){}
-if(encText!=null){let file=null;try{file=JSON.parse(encText)}catch(e){}
+async function loadPosted(){let encStatus=0,encText=null;try{const r=await fetch('./data/bids.enc.json?v='+Date.now(),{cache:'no-store'});encStatus=r.status;if(r.ok)encText=await r.text()}catch(e){encStatus=0}
+if(encStatus===200&&encText!=null){let file=null;try{file=JSON.parse(encText)}catch(e){}
 if(file&&file.ciphertext&&file.salt&&file.iv){await openEnc(file,encText,true);return}}
+if(encStatus===404){try{localStorage.removeItem(ENC_K)}catch(e){}await loadPostedPlain();return}
 const cachedEnc=localStorage.getItem(ENC_K);
 if(cachedEnc){try{const file=JSON.parse(cachedEnc);if(file&&file.ciphertext&&file.salt&&file.iv){await openEnc(file,null,false);return}}catch(e){}}
 await loadPostedPlain()}
