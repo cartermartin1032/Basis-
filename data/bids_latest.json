@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-20T19:25:59Z",
+  "fetched_at": "2026-10-20T20:19:10Z",
   "notes": [],
   "sources": {
     "ADM Havana": "https://adm.gradable.com/market/Havana--IL",
@@ -232,20 +232,20 @@
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2026-09-02 to 2026-10-31 (Fall 26)",
-      "cash": 12.1825,
+      "cash": 12.2025,
       "futures_month": "Nov 2026 (ZSX6)",
       "futures": 12.4825,
-      "basis": -0.3
+      "basis": -0.28
     },
     {
       "date": "2026-10-20",
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2026-11-01 to 2026-11-15 (FH Nov 26)",
-      "cash": 12.5325,
+      "cash": 12.5625,
       "futures_month": "Nov 2026 (ZSX6)",
       "futures": 12.4825,
-      "basis": 0.05
+      "basis": 0.08
     },
     {
       "date": "2026-10-20",
@@ -262,16 +262,6 @@
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2026-12-01 to 2026-12-31 (Dec 26)",
-      "cash": 12.695,
-      "futures_month": "Jan 2027 (ZSF7)",
-      "futures": 12.635,
-      "basis": 0.06
-    },
-    {
-      "date": "2026-10-20",
-      "commodity": "Soybeans",
-      "location": "ADM Havana",
-      "delivery_period": "2027-01-01 to 2027-01-31 (Jan 27)",
       "cash": 12.715,
       "futures_month": "Jan 2027 (ZSF7)",
       "futures": 12.635,
@@ -281,11 +271,21 @@
       "date": "2026-10-20",
       "commodity": "Soybeans",
       "location": "ADM Havana",
+      "delivery_period": "2027-01-01 to 2027-01-31 (Jan 27)",
+      "cash": 12.735,
+      "futures_month": "Jan 2027 (ZSF7)",
+      "futures": 12.635,
+      "basis": 0.1
+    },
+    {
+      "date": "2026-10-20",
+      "commodity": "Soybeans",
+      "location": "ADM Havana",
       "delivery_period": "2027-02-01 to 2027-02-28 (Feb 27)",
-      "cash": 12.7625,
+      "cash": 12.7725,
       "futures_month": "Mar 2027 (ZSH7)",
       "futures": 12.7325,
-      "basis": 0.03
+      "basis": 0.04
     },
     {
       "date": "2026-10-20",
