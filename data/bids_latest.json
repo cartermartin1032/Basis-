@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-20T20:19:10Z",
+  "fetched_at": "2026-10-20T21:21:07Z",
   "notes": [],
   "sources": {
     "ADM Havana": "https://adm.gradable.com/market/Havana--IL",
@@ -102,10 +102,10 @@
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2026-10-01 to 2026-10-31 (Oct 26)",
-      "cash": 4.32,
+      "cash": 4.34,
       "futures_month": "Dec 2026 (CZ6)",
       "futures": 4.62,
-      "basis": -0.3
+      "basis": -0.28
     },
     {
       "date": "2026-10-20",
@@ -322,10 +322,10 @@
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2026-10-01 to 2026-10-31 (Oct 26)",
-      "cash": 12.1825,
+      "cash": 12.2825,
       "futures_month": "Nov 2026 (SX6)",
       "futures": 12.4825,
-      "basis": -0.3
+      "basis": -0.2
     },
     {
       "date": "2026-10-20",
