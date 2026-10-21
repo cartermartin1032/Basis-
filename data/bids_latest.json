@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-21T19:25:09Z",
+  "fetched_at": "2026-10-21T20:19:32Z",
   "notes": [],
   "sources": {
     "ADM Havana": "https://adm.gradable.com/market/Havana--IL",
@@ -12,10 +12,10 @@
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2026-09-02 to 2026-10-31 (Fall 26)",
-      "cash": 4.3825,
+      "cash": 4.4125,
       "futures_month": "Dec 2026 (ZCZ6)",
       "futures": 4.6325,
-      "basis": -0.25
+      "basis": -0.22
     },
     {
       "date": "2026-10-21",
@@ -42,20 +42,20 @@
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2026-12-01 to 2026-12-31 (Dec 26)",
-      "cash": 4.6925,
+      "cash": 4.7025,
       "futures_month": "Dec 2026 (ZCZ6)",
       "futures": 4.6325,
-      "basis": 0.06
+      "basis": 0.07
     },
     {
       "date": "2026-10-21",
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2027-01-01 to 2027-01-31 (Jan 27)",
-      "cash": 4.7525,
+      "cash": 4.7625,
       "futures_month": "Mar 2027 (ZCH7)",
       "futures": 4.7725,
-      "basis": -0.02
+      "basis": -0.01
     },
     {
       "date": "2026-10-21",
@@ -242,10 +242,10 @@
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2026-11-01 to 2026-11-15 (FH Nov 26)",
-      "cash": 12.5325,
+      "cash": 12.4625,
       "futures_month": "Nov 2026 (ZSX6)",
       "futures": 12.4525,
-      "basis": 0.08
+      "basis": 0.01
     },
     {
       "date": "2026-10-21",
