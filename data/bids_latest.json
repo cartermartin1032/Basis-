@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-26T20:21:34Z",
+  "fetched_at": "2026-10-26T21:22:41Z",
   "notes": [],
   "sources": {
     "ADM Havana": "https://adm.gradable.com/market/Havana--IL",
@@ -102,10 +102,10 @@
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2026-10-01 to 2026-10-31 (Oct 26)",
-      "cash": 4.32,
+      "cash": 4.35,
       "futures_month": "Dec 2026 (CZ6)",
       "futures": 4.55,
-      "basis": -0.23
+      "basis": -0.2
     },
     {
       "date": "2026-10-26",
@@ -322,50 +322,50 @@
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2026-10-01 to 2026-10-31 (Oct 26)",
-      "cash": 12.2625,
+      "cash": 12.2825,
       "futures_month": "Nov 2026 (SX6)",
       "futures": 12.4125,
-      "basis": -0.15
+      "basis": -0.13
     },
     {
       "date": "2026-10-26",
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2026-11-01 to 2026-11-15 (FH Nov 26)",
-      "cash": 12.4525,
+      "cash": 12.5325,
       "futures_month": "Nov 2026 (SX6)",
       "futures": 12.4125,
-      "basis": 0.04
+      "basis": 0.12
     },
     {
       "date": "2026-10-26",
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2026-11-01 to 2026-11-30 (Nov 26)",
-      "cash": 12.4525,
+      "cash": 12.5325,
       "futures_month": "Nov 2026 (SX6)",
       "futures": 12.4125,
-      "basis": 0.04
+      "basis": 0.12
     },
     {
       "date": "2026-10-26",
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2026-11-16 to 2026-11-30 (LH Nov 26)",
-      "cash": 12.5125,
+      "cash": 12.5525,
       "futures_month": "Nov 2026 (SX6)",
       "futures": 12.4125,
-      "basis": 0.1
+      "basis": 0.14
     },
     {
       "date": "2026-10-26",
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2026-12-01 to 2026-12-31 (Dec 26)",
-      "cash": 12.605,
+      "cash": 12.625,
       "futures_month": "Jan 2027 (SF7)",
       "futures": 12.525,
-      "basis": 0.08
+      "basis": 0.1
     },
     {
       "date": "2026-10-26",
