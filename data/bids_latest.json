@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-28T19:36:56Z",
+  "fetched_at": "2026-10-28T20:29:20Z",
   "notes": [],
   "sources": {
     "ADM Havana": "https://adm.gradable.com/market/Havana--IL",
@@ -12,10 +12,10 @@
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2026-09-02 to 2026-10-31 (Fall 26)",
-      "cash": 4.3575,
+      "cash": 4.3775,
       "futures_month": "Dec 2026 (ZCZ6)",
       "futures": 4.5175,
-      "basis": -0.16
+      "basis": -0.14
     },
     {
       "date": "2026-10-28",
@@ -42,26 +42,16 @@
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2026-12-01 to 2026-12-31 (Dec 26)",
-      "cash": 4.5975,
+      "cash": 4.6175,
       "futures_month": "Dec 2026 (ZCZ6)",
       "futures": 4.5175,
-      "basis": 0.08
+      "basis": 0.1
     },
     {
       "date": "2026-10-28",
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2027-01-01 to 2027-01-31 (Jan 27)",
-      "cash": 4.65,
-      "futures_month": "Mar 2027 (ZCH7)",
-      "futures": 4.65,
-      "basis": 0.0
-    },
-    {
-      "date": "2026-10-28",
-      "commodity": "Corn",
-      "location": "ADM Havana",
-      "delivery_period": "2027-02-01 to 2027-02-28 (Feb 27)",
       "cash": 4.68,
       "futures_month": "Mar 2027 (ZCH7)",
       "futures": 4.65,
@@ -71,11 +61,21 @@
       "date": "2026-10-28",
       "commodity": "Corn",
       "location": "ADM Havana",
-      "delivery_period": "2027-03-01 to 2027-03-31 (Mar 27)",
-      "cash": 4.71,
+      "delivery_period": "2027-02-01 to 2027-02-28 (Feb 27)",
+      "cash": 4.69,
       "futures_month": "Mar 2027 (ZCH7)",
       "futures": 4.65,
-      "basis": 0.06
+      "basis": 0.04
+    },
+    {
+      "date": "2026-10-28",
+      "commodity": "Corn",
+      "location": "ADM Havana",
+      "delivery_period": "2027-03-01 to 2027-03-31 (Mar 27)",
+      "cash": 4.73,
+      "futures_month": "Mar 2027 (ZCH7)",
+      "futures": 4.65,
+      "basis": 0.08
     },
     {
       "date": "2026-10-28",
@@ -232,10 +232,10 @@
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2026-09-02 to 2026-10-31 (Fall 26)",
-      "cash": 12.115,
+      "cash": 12.145,
       "futures_month": "Nov 2026 (ZSX6)",
       "futures": 12.245,
-      "basis": -0.13
+      "basis": -0.1
     },
     {
       "date": "2026-10-28",
