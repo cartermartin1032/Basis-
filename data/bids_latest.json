@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-29T19:39:29Z",
+  "fetched_at": "2026-10-29T20:31:26Z",
   "notes": [],
   "sources": {
     "ADM Havana": "https://adm.gradable.com/market/Havana--IL",
@@ -12,10 +12,10 @@
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2026-09-02 to 2026-10-31 (Fall 26)",
-      "cash": 4.3725,
+      "cash": 4.3925,
       "futures_month": "Dec 2026 (ZCZ6)",
       "futures": 4.5125,
-      "basis": -0.14
+      "basis": -0.12
     },
     {
       "date": "2026-10-29",
