@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-30T19:36:56Z",
+  "fetched_at": "2026-10-30T20:27:05Z",
   "notes": [
     "Cargill source: WGM feed, may lag Cargill.com (Western Grain fallback also failed: HTTP Error 500: Internal Server Error)",
     "CHS Havana bids unavailable (HTTP Error 500: Internal Server Error)"
@@ -103,10 +103,10 @@
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2026-09-02 to 2026-10-31 (Fall 26)",
-      "cash": 12.1225,
+      "cash": 12.1625,
       "futures_month": "Nov 2026 (ZSX6)",
       "futures": 12.2225,
-      "basis": -0.1
+      "basis": -0.06
     },
     {
       "date": "2026-10-30",
