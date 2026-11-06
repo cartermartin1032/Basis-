@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-06T20:37:03Z",
+  "fetched_at": "2026-11-06T21:29:39Z",
   "notes": [],
   "sources": {
     "ADM Havana": "https://adm.gradable.com/market/Havana--IL",
@@ -222,20 +222,20 @@
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2026-11-01 to 2026-11-15 (FH Nov 26)",
-      "cash": 11.9575,
+      "cash": 11.9875,
       "futures_month": "Jan 2027 (ZSF7)",
       "futures": 11.9375,
-      "basis": 0.02
+      "basis": 0.05
     },
     {
       "date": "2026-11-06",
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2026-11-16 to 2026-11-30 (LH Nov 26)",
-      "cash": 11.9875,
+      "cash": 12.0175,
       "futures_month": "Jan 2027 (ZSF7)",
       "futures": 11.9375,
-      "basis": 0.05
+      "basis": 0.08
     },
     {
       "date": "2026-11-06",
@@ -252,10 +252,10 @@
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2027-01-01 to 2027-01-31 (Jan 27)",
-      "cash": 12.0475,
+      "cash": 12.0575,
       "futures_month": "Jan 2027 (ZSF7)",
       "futures": 11.9375,
-      "basis": 0.11
+      "basis": 0.12
     },
     {
       "date": "2026-11-06",
