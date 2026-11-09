@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-09T16:53:49Z",
+  "fetched_at": "2026-11-09T17:48:22Z",
   "notes": [],
   "sources": {
     "ADM Havana": "https://adm.gradable.com/market/Havana--IL",
@@ -12,9 +12,9 @@
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2026-11-01 to 2026-11-15 (FH Nov 26)",
-      "cash": 4.3925,
+      "cash": 4.3775,
       "futures_month": "Dec 2026 (ZCZ6)",
-      "futures": 4.4025,
+      "futures": 4.3875,
       "basis": -0.01
     },
     {
@@ -22,9 +22,9 @@
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2026-11-16 to 2026-11-30 (LH Nov 26)",
-      "cash": 4.4325,
+      "cash": 4.4175,
       "futures_month": "Dec 2026 (ZCZ6)",
-      "futures": 4.4025,
+      "futures": 4.3875,
       "basis": 0.03
     },
     {
@@ -32,9 +32,9 @@
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2026-12-01 to 2026-12-31 (Dec 26)",
-      "cash": 4.5025,
+      "cash": 4.4875,
       "futures_month": "Dec 2026 (ZCZ6)",
-      "futures": 4.4025,
+      "futures": 4.3875,
       "basis": 0.1
     },
     {
@@ -42,9 +42,9 @@
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2027-01-01 to 2027-01-31 (Jan 27)",
-      "cash": 4.5625,
+      "cash": 4.5475,
       "futures_month": "Mar 2027 (ZCH7)",
-      "futures": 4.5325,
+      "futures": 4.5175,
       "basis": 0.03
     },
     {
@@ -52,9 +52,9 @@
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2027-02-01 to 2027-02-28 (Feb 27)",
-      "cash": 4.5725,
+      "cash": 4.5575,
       "futures_month": "Mar 2027 (ZCH7)",
-      "futures": 4.5325,
+      "futures": 4.5175,
       "basis": 0.04
     },
     {
@@ -62,9 +62,9 @@
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2027-03-01 to 2027-03-31 (Mar 27)",
-      "cash": 4.6125,
+      "cash": 4.5975,
       "futures_month": "Mar 2027 (ZCH7)",
-      "futures": 4.5325,
+      "futures": 4.5175,
       "basis": 0.08
     },
     {
@@ -72,9 +72,9 @@
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2027-04-01 to 2027-04-30 (Apr 27)",
-      "cash": 4.615,
+      "cash": 4.6025,
       "futures_month": "May 2027 (ZCK7)",
-      "futures": 4.615,
+      "futures": 4.6025,
       "basis": 0.0
     },
     {
@@ -82,9 +82,9 @@
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2027-05-01 to 2027-05-31 (May 27)",
-      "cash": 4.675,
+      "cash": 4.6625,
       "futures_month": "May 2027 (ZCK7)",
-      "futures": 4.615,
+      "futures": 4.6025,
       "basis": 0.06
     },
     {
@@ -92,9 +92,9 @@
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2026-11-01 to 2026-11-15 (FH Nov 26)",
-      "cash": 4.39,
+      "cash": 4.375,
       "futures_month": "Dec 2026 (CZ6)",
-      "futures": 4.4,
+      "futures": 4.385,
       "basis": -0.01
     },
     {
@@ -102,9 +102,9 @@
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2026-11-01 to 2026-11-30 (Nov 26)",
-      "cash": 4.39,
+      "cash": 4.375,
       "futures_month": "Dec 2026 (CZ6)",
-      "futures": 4.4,
+      "futures": 4.385,
       "basis": -0.01
     },
     {
@@ -112,9 +112,9 @@
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2026-11-16 to 2026-11-30 (LH Nov 26)",
-      "cash": 4.43,
+      "cash": 4.415,
       "futures_month": "Dec 2026 (CZ6)",
-      "futures": 4.4,
+      "futures": 4.385,
       "basis": 0.03
     },
     {
@@ -122,9 +122,9 @@
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2026-12-01 to 2026-12-31 (Dec 26)",
-      "cash": 4.48,
+      "cash": 4.465,
       "futures_month": "Dec 2026 (CZ6)",
-      "futures": 4.4,
+      "futures": 4.385,
       "basis": 0.08
     },
     {
@@ -132,9 +132,9 @@
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2026-12-16 to 2026-12-31 (LH Dec 26)",
-      "cash": 4.51,
+      "cash": 4.495,
       "futures_month": "Dec 2026 (CZ6)",
-      "futures": 4.4,
+      "futures": 4.385,
       "basis": 0.11
     },
     {
@@ -142,9 +142,9 @@
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2027-01-01 to 2027-01-31 (Jan 27)",
-      "cash": 4.56,
+      "cash": 4.545,
       "futures_month": "Mar 2027 (CH7)",
-      "futures": 4.53,
+      "futures": 4.515,
       "basis": 0.03
     },
     {
@@ -152,9 +152,9 @@
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2027-02-01 to 2027-02-28 (Feb 27)",
-      "cash": 4.57,
+      "cash": 4.555,
       "futures_month": "Mar 2027 (CH7)",
-      "futures": 4.53,
+      "futures": 4.515,
       "basis": 0.04
     },
     {
@@ -162,9 +162,9 @@
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2027-03-01 to 2027-03-31 (Mar 27)",
-      "cash": 4.61,
+      "cash": 4.595,
       "futures_month": "Mar 2027 (CH7)",
-      "futures": 4.53,
+      "futures": 4.515,
       "basis": 0.08
     },
     {
@@ -172,9 +172,9 @@
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2027-04-01 to 2027-04-30 (Apr 27)",
-      "cash": 4.6125,
+      "cash": 4.6,
       "futures_month": "May 2027 (CK7)",
-      "futures": 4.6125,
+      "futures": 4.6,
       "basis": 0.0
     },
     {
@@ -182,9 +182,9 @@
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2027-05-01 to 2027-05-31 (May 27)",
-      "cash": 4.6725,
+      "cash": 4.66,
       "futures_month": "May 2027 (CK7)",
-      "futures": 4.6125,
+      "futures": 4.6,
       "basis": 0.06
     },
     {
@@ -192,9 +192,9 @@
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2027-06-01 to 2027-06-30 (Jun 27)",
-      "cash": 4.6925,
+      "cash": 4.68,
       "futures_month": "Jul 2027 (CN7)",
-      "futures": 4.6925,
+      "futures": 4.68,
       "basis": 0.0
     },
     {
@@ -202,9 +202,9 @@
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2027-07-01 to 2027-07-31 (Jul 27)",
-      "cash": 4.7425,
+      "cash": 4.73,
       "futures_month": "Jul 2027 (CN7)",
-      "futures": 4.6925,
+      "futures": 4.68,
       "basis": 0.05
     },
     {
@@ -212,9 +212,9 @@
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2027-09-01 to 2027-10-31 (Sep-Oct 27)",
-      "cash": 4.5275,
+      "cash": 4.515,
       "futures_month": "Dec 2027 (CZ7)",
-      "futures": 4.8275,
+      "futures": 4.815,
       "basis": -0.3
     },
     {
@@ -222,9 +222,9 @@
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2026-11-01 to 2026-11-15 (FH Nov 26)",
-      "cash": 11.9925,
+      "cash": 11.94,
       "futures_month": "Jan 2027 (ZSF7)",
-      "futures": 11.9425,
+      "futures": 11.89,
       "basis": 0.05
     },
     {
@@ -232,9 +232,9 @@
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2026-11-16 to 2026-11-30 (LH Nov 26)",
-      "cash": 12.0225,
+      "cash": 11.97,
       "futures_month": "Jan 2027 (ZSF7)",
-      "futures": 11.9425,
+      "futures": 11.89,
       "basis": 0.08
     },
     {
@@ -242,9 +242,9 @@
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2026-12-01 to 2026-12-31 (Dec 26)",
-      "cash": 12.0425,
+      "cash": 11.99,
       "futures_month": "Jan 2027 (ZSF7)",
-      "futures": 11.9425,
+      "futures": 11.89,
       "basis": 0.1
     },
     {
@@ -252,9 +252,9 @@
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2027-01-01 to 2027-01-31 (Jan 27)",
-      "cash": 12.0625,
+      "cash": 12.01,
       "futures_month": "Jan 2027 (ZSF7)",
-      "futures": 11.9425,
+      "futures": 11.89,
       "basis": 0.12
     },
     {
@@ -262,9 +262,9 @@
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2027-02-01 to 2027-02-28 (Feb 27)",
-      "cash": 12.04,
+      "cash": 11.995,
       "futures_month": "Mar 2027 (ZSH7)",
-      "futures": 12.0,
+      "futures": 11.955,
       "basis": 0.04
     },
     {
@@ -272,9 +272,9 @@
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2027-03-01 to 2027-03-31 (Mar 27)",
-      "cash": 12.08,
+      "cash": 12.035,
       "futures_month": "Mar 2027 (ZSH7)",
-      "futures": 12.0,
+      "futures": 11.955,
       "basis": 0.08
     },
     {
@@ -282,9 +282,9 @@
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2027-04-01 to 2027-04-30 (Apr 27)",
-      "cash": 12.09,
+      "cash": 12.0475,
       "futures_month": "May 2027 (ZSK7)",
-      "futures": 12.09,
+      "futures": 12.0475,
       "basis": 0.0
     },
     {
@@ -292,9 +292,9 @@
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2027-05-01 to 2027-05-31 (May 27)",
-      "cash": 12.14,
+      "cash": 12.0975,
       "futures_month": "May 2027 (ZSK7)",
-      "futures": 12.09,
+      "futures": 12.0475,
       "basis": 0.05
     },
     {
@@ -302,9 +302,9 @@
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2026-11-01 to 2026-11-15 (FH Nov 26)",
-      "cash": 11.94,
+      "cash": 11.8875,
       "futures_month": "Jan 2027 (SF7)",
-      "futures": 11.94,
+      "futures": 11.8875,
       "basis": 0.0
     },
     {
@@ -312,9 +312,9 @@
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2026-11-01 to 2026-11-30 (Nov 26)",
-      "cash": 11.94,
+      "cash": 11.8875,
       "futures_month": "Jan 2027 (SF7)",
-      "futures": 11.94,
+      "futures": 11.8875,
       "basis": 0.0
     },
     {
@@ -322,9 +322,9 @@
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2026-11-16 to 2026-11-30 (LH Nov 26)",
-      "cash": 11.96,
+      "cash": 11.9075,
       "futures_month": "Jan 2027 (SF7)",
-      "futures": 11.94,
+      "futures": 11.8875,
       "basis": 0.02
     },
     {
@@ -332,9 +332,9 @@
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2026-12-01 to 2026-12-31 (Dec 26)",
-      "cash": 12.04,
+      "cash": 11.9875,
       "futures_month": "Jan 2027 (SF7)",
-      "futures": 11.94,
+      "futures": 11.8875,
       "basis": 0.1
     },
     {
@@ -342,9 +342,9 @@
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2027-01-01 to 2027-01-31 (Jan 27)",
-      "cash": 12.06,
+      "cash": 12.0075,
       "futures_month": "Jan 2027 (SF7)",
-      "futures": 11.94,
+      "futures": 11.8875,
       "basis": 0.12
     },
     {
@@ -352,9 +352,9 @@
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2027-02-01 to 2027-02-28 (Feb 27)",
-      "cash": 12.0375,
+      "cash": 11.9925,
       "futures_month": "Mar 2027 (SH7)",
-      "futures": 11.9975,
+      "futures": 11.9525,
       "basis": 0.04
     },
     {
@@ -362,9 +362,9 @@
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2027-03-01 to 2027-03-31 (Mar 27)",
-      "cash": 12.0775,
+      "cash": 12.0325,
       "futures_month": "Mar 2027 (SH7)",
-      "futures": 11.9975,
+      "futures": 11.9525,
       "basis": 0.08
     },
     {
@@ -372,9 +372,9 @@
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2027-04-01 to 2027-04-30 (Apr 27)",
-      "cash": 12.0875,
+      "cash": 12.0475,
       "futures_month": "May 2027 (SK7)",
-      "futures": 12.0875,
+      "futures": 12.0475,
       "basis": 0.0
     },
     {
@@ -382,9 +382,9 @@
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2027-05-01 to 2027-05-31 (May 27)",
-      "cash": 12.1375,
+      "cash": 12.0975,
       "futures_month": "May 2027 (SK7)",
-      "futures": 12.0875,
+      "futures": 12.0475,
       "basis": 0.05
     },
     {
@@ -392,9 +392,9 @@
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2027-06-01 to 2027-06-30 (Jun 27)",
-      "cash": 12.1375,
+      "cash": 12.1,
       "futures_month": "Jul 2027 (SN7)",
-      "futures": 12.1575,
+      "futures": 12.12,
       "basis": -0.02
     },
     {
@@ -402,9 +402,9 @@
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2027-07-01 to 2027-07-31 (Jul 27)",
-      "cash": 12.1575,
+      "cash": 12.12,
       "futures_month": "Jul 2027 (SN7)",
-      "futures": 12.1575,
+      "futures": 12.12,
       "basis": 0.0
     },
     {
@@ -412,9 +412,9 @@
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2027-09-01 to 2027-10-31 (Sep-Oct 27)",
-      "cash": 11.3675,
+      "cash": 11.34,
       "futures_month": "Nov 2027 (SX7)",
-      "futures": 11.7675,
+      "futures": 11.74,
       "basis": -0.4
     }
   ]
