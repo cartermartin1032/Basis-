@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-12T19:44:48Z",
+  "fetched_at": "2026-11-12T20:39:10Z",
   "notes": [],
   "sources": {
     "ADM Havana": "https://adm.gradable.com/market/Havana--IL",
@@ -12,50 +12,50 @@
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2026-11-01 to 2026-11-15 (FH Nov 26)",
-      "cash": 4.445,
+      "cash": 4.455,
       "futures_month": "Dec 2026 (ZCZ6)",
       "futures": 4.425,
-      "basis": 0.02
-    },
-    {
-      "date": "2026-11-12",
-      "commodity": "Corn",
-      "location": "ADM Havana",
-      "delivery_period": "2026-11-16 to 2026-11-30 (LH Nov 26)",
-      "cash": 4.475,
-      "futures_month": "Dec 2026 (ZCZ6)",
-      "futures": 4.425,
-      "basis": 0.05
-    },
-    {
-      "date": "2026-11-12",
-      "commodity": "Corn",
-      "location": "ADM Havana",
-      "delivery_period": "2026-12-01 to 2026-12-31 (Dec 26)",
-      "cash": 4.525,
-      "futures_month": "Dec 2026 (ZCZ6)",
-      "futures": 4.425,
-      "basis": 0.1
-    },
-    {
-      "date": "2026-11-12",
-      "commodity": "Corn",
-      "location": "ADM Havana",
-      "delivery_period": "2027-01-01 to 2027-01-31 (Jan 27)",
-      "cash": 4.5775,
-      "futures_month": "Mar 2027 (ZCH7)",
-      "futures": 4.5475,
       "basis": 0.03
     },
     {
       "date": "2026-11-12",
       "commodity": "Corn",
       "location": "ADM Havana",
-      "delivery_period": "2027-02-01 to 2027-02-28 (Feb 27)",
+      "delivery_period": "2026-11-16 to 2026-11-30 (LH Nov 26)",
+      "cash": 4.485,
+      "futures_month": "Dec 2026 (ZCZ6)",
+      "futures": 4.425,
+      "basis": 0.06
+    },
+    {
+      "date": "2026-11-12",
+      "commodity": "Corn",
+      "location": "ADM Havana",
+      "delivery_period": "2026-12-01 to 2026-12-31 (Dec 26)",
+      "cash": 4.535,
+      "futures_month": "Dec 2026 (ZCZ6)",
+      "futures": 4.425,
+      "basis": 0.11
+    },
+    {
+      "date": "2026-11-12",
+      "commodity": "Corn",
+      "location": "ADM Havana",
+      "delivery_period": "2027-01-01 to 2027-01-31 (Jan 27)",
       "cash": 4.5875,
       "futures_month": "Mar 2027 (ZCH7)",
       "futures": 4.5475,
       "basis": 0.04
+    },
+    {
+      "date": "2026-11-12",
+      "commodity": "Corn",
+      "location": "ADM Havana",
+      "delivery_period": "2027-02-01 to 2027-02-28 (Feb 27)",
+      "cash": 4.5975,
+      "futures_month": "Mar 2027 (ZCH7)",
+      "futures": 4.5475,
+      "basis": 0.05
     },
     {
       "date": "2026-11-12",
