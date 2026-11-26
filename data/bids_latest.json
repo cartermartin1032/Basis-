@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-25T22:06:11Z",
+  "fetched_at": "2026-11-26T22:04:39Z",
   "notes": [],
   "sources": {
     "ADM Havana": "https://adm.gradable.com/market/Havana--IL",
@@ -8,7 +8,7 @@
   },
   "bids": [
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2026-11-16 to 2026-11-30 (LH Nov 26)",
@@ -18,7 +18,7 @@
       "basis": 0.0
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2026-12-01 to 2026-12-31 (Dec 26)",
@@ -28,7 +28,7 @@
       "basis": 0.1
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2027-01-01 to 2027-01-31 (Jan 27)",
@@ -38,7 +38,7 @@
       "basis": 0.04
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2027-02-01 to 2027-02-28 (Feb 27)",
@@ -48,7 +48,7 @@
       "basis": 0.05
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2027-03-01 to 2027-03-31 (Mar 27)",
@@ -58,7 +58,7 @@
       "basis": 0.09
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2027-04-01 to 2027-04-30 (Apr 27)",
@@ -68,7 +68,7 @@
       "basis": 0.02
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2027-05-01 to 2027-05-31 (May 27)",
@@ -78,7 +78,7 @@
       "basis": 0.06
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2027-06-01 to 2027-06-30 (June 27)",
@@ -88,7 +88,7 @@
       "basis": 0.02
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Corn",
       "location": "ADM Havana",
       "delivery_period": "2027-07-01 to 2027-07-31 (July 27)",
@@ -98,7 +98,7 @@
       "basis": 0.05
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2026-11-01 to 2026-11-30 (Nov 26)",
@@ -108,7 +108,7 @@
       "basis": 0.0
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2026-11-16 to 2026-11-30 (LH Nov 26)",
@@ -118,7 +118,7 @@
       "basis": 0.0
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2026-12-01 to 2026-12-31 (Dec 26)",
@@ -128,7 +128,7 @@
       "basis": 0.1
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2026-12-16 to 2026-12-31 (LH Dec 26)",
@@ -138,7 +138,7 @@
       "basis": 0.12
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2027-01-01 to 2027-01-31 (Jan 27)",
@@ -148,7 +148,7 @@
       "basis": 0.04
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2027-02-01 to 2027-02-28 (Feb 27)",
@@ -158,7 +158,7 @@
       "basis": 0.05
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2027-03-01 to 2027-03-31 (Mar 27)",
@@ -168,7 +168,7 @@
       "basis": 0.08
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2027-04-01 to 2027-04-30 (Apr 27)",
@@ -178,7 +178,7 @@
       "basis": 0.0
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2027-05-01 to 2027-05-31 (May 27)",
@@ -188,7 +188,7 @@
       "basis": 0.06
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2027-06-01 to 2027-06-30 (Jun 27)",
@@ -198,7 +198,7 @@
       "basis": 0.02
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2027-07-01 to 2027-07-31 (Jul 27)",
@@ -208,7 +208,7 @@
       "basis": 0.05
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Corn",
       "location": "Cargill Havana",
       "delivery_period": "2027-09-01 to 2027-10-31 (Sep-Oct 27)",
@@ -218,7 +218,7 @@
       "basis": -0.3
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2026-11-16 to 2026-11-30 (LH Nov 26)",
@@ -228,7 +228,7 @@
       "basis": 0.06
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2026-12-01 to 2026-12-31 (Dec 26)",
@@ -238,7 +238,7 @@
       "basis": 0.1
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2027-01-01 to 2027-01-31 (Jan 27)",
@@ -248,7 +248,7 @@
       "basis": 0.14
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2027-02-01 to 2027-02-28 (Feb 27)",
@@ -258,7 +258,7 @@
       "basis": 0.06
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2027-03-01 to 2027-03-31 (Mar 27)",
@@ -268,7 +268,7 @@
       "basis": 0.1
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2027-04-01 to 2027-04-30 (Apr 27)",
@@ -278,7 +278,7 @@
       "basis": 0.04
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2027-05-01 to 2027-05-31 (May 27)",
@@ -288,7 +288,7 @@
       "basis": 0.07
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2027-06-01 to 2027-06-30 (June 27)",
@@ -298,7 +298,7 @@
       "basis": 0.04
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Soybeans",
       "location": "ADM Havana",
       "delivery_period": "2027-07-01 to 2027-07-31 (July 27)",
@@ -308,7 +308,7 @@
       "basis": 0.07
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2026-11-01 to 2026-11-30 (Nov 26)",
@@ -318,7 +318,7 @@
       "basis": 0.06
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2026-11-16 to 2026-11-30 (LH Nov 26)",
@@ -328,7 +328,7 @@
       "basis": 0.06
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2026-12-01 to 2026-12-31 (Dec 26)",
@@ -338,7 +338,7 @@
       "basis": 0.1
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2027-01-01 to 2027-01-31 (Jan 27)",
@@ -348,7 +348,7 @@
       "basis": 0.14
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2027-02-01 to 2027-02-28 (Feb 27)",
@@ -358,7 +358,7 @@
       "basis": 0.06
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2027-03-01 to 2027-03-31 (Mar 27)",
@@ -368,7 +368,7 @@
       "basis": 0.1
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2027-04-01 to 2027-04-30 (Apr 27)",
@@ -378,7 +378,7 @@
       "basis": 0.03
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2027-05-01 to 2027-05-31 (May 27)",
@@ -388,7 +388,7 @@
       "basis": 0.07
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2027-06-01 to 2027-06-30 (Jun 27)",
@@ -398,7 +398,7 @@
       "basis": 0.0
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2027-07-01 to 2027-07-31 (Jul 27)",
@@ -408,7 +408,7 @@
       "basis": 0.05
     },
     {
-      "date": "2026-11-25",
+      "date": "2026-11-26",
       "commodity": "Soybeans",
       "location": "Cargill Havana",
       "delivery_period": "2027-09-01 to 2027-10-31 (Sep-Oct 27)",
